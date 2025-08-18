@@ -18,9 +18,13 @@ public class PerguntasTecnicas implements Serializable {
     @Getter @Setter
     private Long id;
 
+    @Getter @Setter
     private Integer questao;
+
     private String tipo;
     private String alternativa;
+
+    @Getter @Setter
     private String descricaoPergunta;
 
     public PerguntasTecnicas(){
