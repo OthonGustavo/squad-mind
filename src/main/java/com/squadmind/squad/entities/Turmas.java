@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.time.Instant;
 
 @Entity
-public class Usuario implements Serializable {
+public class Turmas implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -19,19 +19,11 @@ public class Usuario implements Serializable {
     @Getter @Setter
     private Long id;
 
-    @Getter @Setter
-    private String nome;
-
-    @Getter @Setter
-    private String senha;
-
-    private String tipo;
-    private String registro;
+    private String nomeTurma;
+    private String chaveEntrada;
+    private Integer quantidadeGrupo;
     private Instant criadoEm;
 
-    public Usuario(){
-
-    }
 
 
 }

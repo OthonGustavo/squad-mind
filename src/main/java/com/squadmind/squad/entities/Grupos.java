@@ -7,18 +7,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PerguntaTecnica implements Serializable {
+public class Grupos implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
     private Long id;
-
-    private Integer questao;
-    private String tipo;
-    private String alternativa;
-    private String descricaoPergunta;
-
+    List<Turmas> turmas = new ArrayList<>();
+    private Integer numeroGrupo;
 
 }
