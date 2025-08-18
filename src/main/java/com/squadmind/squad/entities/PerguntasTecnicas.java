@@ -1,5 +1,6 @@
 package com.squadmind.squad.entities;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,6 +12,9 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@EqualsAndHashCode(of = "id")
+@NoArgsConstructor
 public class PerguntasTecnicas implements Serializable {
 
     @Id
@@ -27,10 +31,6 @@ public class PerguntasTecnicas implements Serializable {
     @Getter @Setter
     private String descricaoPergunta;
 
-    public PerguntasTecnicas(){
-
-    }
-
     public PerguntasTecnicas(Integer questao, String tipo, String alternativa, String descricaoPergunta) {
         this.questao = questao;
         this.tipo = tipo;
@@ -38,15 +38,4 @@ public class PerguntasTecnicas implements Serializable {
         this.descricaoPergunta = descricaoPergunta;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        PerguntasTecnicas that = (PerguntasTecnicas) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
 }

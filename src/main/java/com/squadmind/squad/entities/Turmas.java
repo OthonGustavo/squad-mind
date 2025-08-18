@@ -4,7 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -12,6 +14,8 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Entity
+@EqualsAndHashCode(of = "id")
+@NoArgsConstructor
 public class Turmas implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -26,17 +30,5 @@ public class Turmas implements Serializable {
     private String chaveEntrada;
     private Integer quantidadeGrupo;
     private Instant criadoEm;
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Turmas turmas = (Turmas) o;
-        return Objects.equals(id, turmas.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
 
 }
