@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Objects;
 
 @Entity
 public class Usuario implements Serializable {
@@ -33,5 +34,24 @@ public class Usuario implements Serializable {
 
     }
 
+    public Usuario(String nome, String senha, String tipo, String registro, Instant criadoEm) {
+        this.nome = nome;
+        this.senha = senha;
+        this.tipo = tipo;
+        this.registro = registro;
+        this.criadoEm = criadoEm;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(id, usuario.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 
 }
