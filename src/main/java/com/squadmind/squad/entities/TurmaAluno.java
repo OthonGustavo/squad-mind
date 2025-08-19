@@ -25,8 +25,12 @@ public class TurmaAluno implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
     private Long id;
-    private List<Usuario> alunos = new ArrayList<>();
-    private List<Turmas> turmas = new ArrayList<>();
+    private List<Usuario> alunoId = new ArrayList<>();
+    private List<Turmas> turmaId = new ArrayList<>();
     private Instant dataEntrada;
 
+    public TurmaAluno(Long id, Instant dataEntrada) {
+        this.id = id;
+        this.dataEntrada = dataEntrada;
+    }
 }

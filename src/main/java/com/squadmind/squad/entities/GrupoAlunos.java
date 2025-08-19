@@ -22,6 +22,7 @@ public class GrupoAlunos implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
     private Long id;
+    private List<Turmas> turmas = new ArrayList<>();
     private List<Grupos> grupos = new ArrayList<>();
 
 }

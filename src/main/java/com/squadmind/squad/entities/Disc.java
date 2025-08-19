@@ -11,7 +11,7 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.Objects;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 public class Disc implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -24,12 +24,8 @@ public class Disc implements Serializable {
     @Getter @Setter
     String descricao;
 
-    public Disc(){
-
-    }
-
-    public Disc(String descricao) {
+    public Disc(Long id, String descricao) {
+        this.id = id;
         this.descricao = descricao;
     }
-
 }

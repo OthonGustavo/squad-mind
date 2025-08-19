@@ -4,14 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Objects;
 
 @Entity
 @EqualsAndHashCode(of = "id")
@@ -30,11 +26,17 @@ public class Usuario implements Serializable {
     @Getter @Setter
     private String senha;
 
+    @Getter @Setter
     private String tipo;
+
+    @Getter @Setter
     private String registro;
+
+    @Getter @Setter
     private Instant criadoEm;
 
-    public Usuario(String nome, String senha, String tipo, String registro, Instant criadoEm) {
+    public Usuario(Long id, String nome, String senha, String tipo, String registro, Instant criadoEm) {
+        this.id = id;
         this.nome = nome;
         this.senha = senha;
         this.tipo = tipo;

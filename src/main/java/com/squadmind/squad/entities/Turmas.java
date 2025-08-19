@@ -11,6 +11,8 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -28,6 +30,7 @@ public class Turmas implements Serializable {
     private String nomeTurma;
 
     private String chaveEntrada;
+    private List<Usuario> professorId = new ArrayList<>();
     private Integer quantidadeGrupo;
     private Instant criadoEm;
 

@@ -25,4 +25,9 @@ public class Grupos implements Serializable {
     List<Turmas> turmas = new ArrayList<>();
     private Integer numeroGrupo;
 
+    public Grupos(Long id, Integer numeroGrupo) {
+        this.id = id;
+        this.numeroGrupo = numeroGrupo;
+    }
+
 }
