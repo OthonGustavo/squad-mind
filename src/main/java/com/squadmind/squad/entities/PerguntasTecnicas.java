@@ -16,6 +16,7 @@ import java.util.Objects;
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 public class PerguntasTecnicas implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
