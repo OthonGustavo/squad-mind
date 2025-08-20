@@ -1,9 +1,6 @@
 package com.squadmind.squad.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "turmas")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 public class Turmas implements Serializable {
@@ -27,11 +25,16 @@ public class Turmas implements Serializable {
     private Long id;
 
     @Getter @Setter
+    @Column(name = "nome_turma")
     private String nomeTurma;
 
+    @Column(name = "chave_entrada")
     private String chaveEntrada;
+
+    @Column(name = "professor_id")
     private List<Usuario> professorId = new ArrayList<>();
-    private Integer quantidadeGrupo;
+
+    @Column(name = "criado_em")
     private Instant criadoEm;
 
 }

@@ -21,12 +21,7 @@ public class TestConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Usuario u1 = new Usuario(null, "Test1", "testpwd", "aluno", "1221151824", Instant.now());
-        Usuario u2 = new Usuario(null, "Test2", "pwd2", "professor", "100", Instant.now());
-        Usuario u3 = new Usuario(null, "Test3", "pwd3", "professor", "500", Instant.now());
-        Usuario u4 = new Usuario(null, "Test4", "pwd4", "aluno", "800", Instant.now());
-
-        usuarioRepository.saveAll(Arrays.asList(u1, u2, u3, u4));
+        System.out.println(usuarioRepository.findAll());
 
     }
 }

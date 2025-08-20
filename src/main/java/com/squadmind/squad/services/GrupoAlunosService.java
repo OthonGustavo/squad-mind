@@ -1,8 +1,7 @@
 package com.squadmind.squad.services;
 
-import com.squadmind.squad.entities.Turmas;
-import com.squadmind.squad.entities.Turmas;
-import com.squadmind.squad.repositories.TurmasRepository;
+import com.squadmind.squad.entities.GrupoAlunos;
+import com.squadmind.squad.repositories.GrupoAlunosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,21 +9,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TurmasService {
+public class GrupoAlunosService {
 
     @Autowired
-    TurmasRepository repository;
+    GrupoAlunosRepository repository;
 
-    public List<Turmas> findAll(){
+    public List<GrupoAlunos> findAll(){
         return repository.findAll();
     }
 
-    public Turmas findById(Long id){
-        Optional<Turmas> obj = repository.findById(id);
+    public GrupoAlunos findById(Long id){
+        Optional<GrupoAlunos> obj = repository.findById(id);
         return obj.get();
     }
 
-    public Turmas insert(Turmas obj){
+    public GrupoAlunos insert(GrupoAlunos obj){
         return repository.save(obj);
     }
 

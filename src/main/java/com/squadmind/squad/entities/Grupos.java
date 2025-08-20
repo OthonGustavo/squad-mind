@@ -1,8 +1,6 @@
 package com.squadmind.squad.entities;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,8 +9,9 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+@Entity
+@Table(name = "grupos")
 @EqualsAndHashCode
 @NoArgsConstructor
 public class Grupos implements Serializable {
@@ -22,7 +21,11 @@ public class Grupos implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
     private Long id;
+
+    @Column(name = "turma_id")
     List<Turmas> turmas = new ArrayList<>();
+
+    @Column(name = "numero_grupo")
     private Integer numeroGrupo;
 
     public Grupos(Long id, Integer numeroGrupo) {

@@ -1,0 +1,34 @@
+package com.squadmind.squad.services;
+
+import com.squadmind.squad.entities.PerguntasTecnicas;
+import com.squadmind.squad.repositories.PerguntasTecnicasRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class PerguntasTecnicasService {
+
+    @Autowired
+    PerguntasTecnicasRepository repository;
+
+    public List<PerguntasTecnicas> findAll(){
+        return repository.findAll();
+    }
+
+    public PerguntasTecnicas findById(Long id){
+        Optional<PerguntasTecnicas> obj = repository.findById(id);
+        return obj.get();
+    }
+
+    public PerguntasTecnicas insert(PerguntasTecnicas obj){
+        return repository.save(obj);
+    }
+
+    public void delete(Long id){
+        repository.deleteById(id);
+    }
+
+}

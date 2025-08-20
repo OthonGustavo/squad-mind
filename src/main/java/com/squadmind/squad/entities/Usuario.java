@@ -1,15 +1,13 @@
 package com.squadmind.squad.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
 
 @Entity
+@Table(name = "usuarios")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 public class Usuario implements Serializable {
@@ -33,6 +31,7 @@ public class Usuario implements Serializable {
     private String registro;
 
     @Getter @Setter
+    @Column(name = "criado_em")
     private Instant criadoEm;
 
     public Usuario(Long id, String nome, String senha, String tipo, String registro, Instant criadoEm) {
