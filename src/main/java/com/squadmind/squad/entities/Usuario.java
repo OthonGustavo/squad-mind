@@ -5,11 +5,14 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "usuarios")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
+@ToString
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -17,6 +20,12 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
     private Long id;
+
+    @OneToMany(mappedBy = "usuarios")
+    private List<Turmas> turmas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "turma_alunos")
+    private List<TurmaAluno> turmaAlunos = new ArrayList<>();
 
     @Getter @Setter
     private String nome;

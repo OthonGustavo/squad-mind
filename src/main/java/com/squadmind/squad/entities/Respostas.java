@@ -24,10 +24,12 @@ public class Respostas implements Serializable {
     @Column(name = "respostas_json")
     private String respostas_json;
 
-    @Column(name = "aluno_id")
+    @OneToMany
+    @JoinColumn(name = "aluno_id")
     private List<Usuario> alunoId = new ArrayList<>();
 
-    @Column(name = "turma_id")
+    @OneToMany
+    @JoinColumn(name = "turma_id")
     private List<Turmas> turmasId = new ArrayList<>();
 
     @Getter

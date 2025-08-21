@@ -23,10 +23,12 @@ public class GrupoAlunos implements Serializable {
     @Getter @Setter
     private Long id;
 
-    @Column(name = "aluno_id")
+    @OneToMany
+    @JoinColumn(name = "aluno_id")
     private List<Usuario> alunoId = new ArrayList<>();
 
-    @Column(name = "grupo_id")
+    @OneToMany
+    @JoinColumn(name = "grupo_id")
     private List<Grupos> grupos = new ArrayList<>();
 
     @Column(name = "registro_aluno")

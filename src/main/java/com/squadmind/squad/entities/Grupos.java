@@ -22,7 +22,8 @@ public class Grupos implements Serializable {
     @Getter @Setter
     private Long id;
 
-    @Column(name = "turma_id")
+    @OneToMany
+    @JoinColumn(name = "turma_id")
     List<Turmas> turmas = new ArrayList<>();
 
     @Column(name = "numero_grupo")

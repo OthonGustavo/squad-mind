@@ -1,10 +1,7 @@
 package com.squadmind.squad.entities;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -16,6 +13,7 @@ import java.util.Objects;
 @Table(name = "turmas")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
+@ToString
 public class Turmas implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -31,8 +29,11 @@ public class Turmas implements Serializable {
     @Column(name = "chave_entrada")
     private String chaveEntrada;
 
-    @Column(name = "professor_id")
+    @OneToMany
+    @JoinColumn(name = "professor_id")
     private List<Usuario> professorId = new ArrayList<>();
+
+    private List<Usuario> alunoId = new ArrayList<>();
 
     @Column(name = "criado_em")
     private Instant criadoEm;

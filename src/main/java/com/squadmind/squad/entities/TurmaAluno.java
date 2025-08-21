@@ -24,10 +24,12 @@ public class TurmaAluno implements Serializable {
     @Getter @Setter
     private Long id;
 
-    @Column(name = "aluno_id")
+    @ManyToOne
+    @JoinColumn(name = "aluno_id")
     private List<Usuario> alunoId = new ArrayList<>();
 
-    @Column(name = "turma_id")
+    @ManyToOne
+    @JoinColumn(name = "turma_id")
     private List<Turmas> turmaId = new ArrayList<>();
 
     @Column(name = "data_entrada")
