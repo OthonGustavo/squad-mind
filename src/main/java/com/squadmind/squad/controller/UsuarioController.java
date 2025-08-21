@@ -1,8 +1,8 @@
-package com.squadmind.squad.resources;
+package com.squadmind.squad.controller;
 
 
-import com.squadmind.squad.entities.Usuario;
-import com.squadmind.squad.services.UsuarioService;
+import com.squadmind.squad.entity.Usuario;
+import com.squadmind.squad.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class UsuarioResource {
+public class UsuarioController {
 
     @Autowired
     private UsuarioService service;

@@ -1,4 +1,4 @@
-package com.squadmind.squad.entities;
+package com.squadmind.squad.entity;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -22,7 +22,7 @@ public class Grupos implements Serializable {
     @Getter @Setter
     private Long id;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "turma_id")
     List<Turmas> turmas = new ArrayList<>();
 

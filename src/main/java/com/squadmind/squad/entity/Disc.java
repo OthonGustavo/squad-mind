@@ -1,4 +1,4 @@
-package com.squadmind.squad.entities;
+package com.squadmind.squad.entity;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor

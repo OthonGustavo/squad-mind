@@ -1,8 +1,8 @@
-package com.squadmind.squad.resources;
+package com.squadmind.squad.controller;
 
 
-import com.squadmind.squad.entities.Turmas;
-import com.squadmind.squad.services.TurmasService;
+import com.squadmind.squad.entity.Turmas;
+import com.squadmind.squad.service.TurmasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/turmas")
-public class TurmasResource {
+public class TurmasController {
 
     @Autowired
     private TurmasService service;

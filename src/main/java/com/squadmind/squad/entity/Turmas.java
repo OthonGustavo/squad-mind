@@ -1,4 +1,4 @@
-package com.squadmind.squad.entities;
+package com.squadmind.squad.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "turmas")
@@ -29,12 +28,16 @@ public class Turmas implements Serializable {
     @Column(name = "chave_entrada")
     private String chaveEntrada;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "professor_id")
-    private List<Usuario> professorId = new ArrayList<>();
+    @Getter @Setter
+    private Usuario professorId;
 
-    private List<Usuario> alunoId = new ArrayList<>();
+    @OneToMany(mappedBy = "turmas")
+    @Getter @Setter
+    private List<TurmaAluno> turmaAlunos = new ArrayList<>();
 
+    @Getter
     @Column(name = "criado_em")
     private Instant criadoEm;
 

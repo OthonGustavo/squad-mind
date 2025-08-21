@@ -1,6 +1,6 @@
-package com.squadmind.squad.repositories;
+package com.squadmind.squad.repository;
 
-import com.squadmind.squad.entities.Usuario;
+import com.squadmind.squad.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UsuarioRepository extends JpaRepository<Usuario,Long> {

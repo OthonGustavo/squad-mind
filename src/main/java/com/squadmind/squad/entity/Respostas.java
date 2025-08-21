@@ -1,10 +1,9 @@
-package com.squadmind.squad.entities;
+package com.squadmind.squad.entity;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,11 +23,11 @@ public class Respostas implements Serializable {
     @Column(name = "respostas_json")
     private String respostas_json;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "aluno_id")
     private List<Usuario> alunoId = new ArrayList<>();
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "turma_id")
     private List<Turmas> turmasId = new ArrayList<>();
 

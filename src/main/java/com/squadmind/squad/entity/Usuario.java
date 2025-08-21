@@ -1,4 +1,4 @@
-package com.squadmind.squad.entities;
+package com.squadmind.squad.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,8 +24,14 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy = "usuarios")
     private List<Turmas> turmas = new ArrayList<>();
 
-    @OneToMany(mappedBy = "turma_alunos")
+    @OneToMany(mappedBy = "usuarios")
     private List<TurmaAluno> turmaAlunos = new ArrayList<>();
+
+    @OneToMany
+    private List<GrupoAlunos> grupoAlunos = new ArrayList<>();
+
+    @OneToMany
+    private List<Respostas> respostas = new ArrayList<>();
 
     @Getter @Setter
     private String nome;

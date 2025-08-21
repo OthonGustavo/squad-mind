@@ -1,7 +1,7 @@
-package com.squadmind.squad.services;
+package com.squadmind.squad.service;
 
-import com.squadmind.squad.entities.Usuario;
-import com.squadmind.squad.repositories.UsuarioRepository;
+import com.squadmind.squad.entity.Grupos;
+import com.squadmind.squad.repository.GruposRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,21 +9,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioService {
+public class GruposService {
 
     @Autowired
-    private UsuarioRepository repository;
+    GruposRepository repository;
 
-    public List<Usuario> findAll(){
+    public List<Grupos> findAll(){
         return repository.findAll();
     }
 
-    public Usuario findById(Long id){
-        Optional<Usuario> obj = repository.findById(id);
+    public Grupos findById(Long id){
+        Optional<Grupos> obj = repository.findById(id);
         return obj.get();
     }
 
-    public Usuario insert(Usuario obj){
+    public Grupos insert(Grupos obj){
         return repository.save(obj);
     }
 

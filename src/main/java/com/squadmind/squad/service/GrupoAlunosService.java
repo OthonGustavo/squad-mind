@@ -1,7 +1,7 @@
-package com.squadmind.squad.services;
+package com.squadmind.squad.service;
 
-import com.squadmind.squad.entities.GrupoAlunos;
-import com.squadmind.squad.repositories.GrupoAlunosRepository;
+import com.squadmind.squad.entity.GrupoAlunos;
+import com.squadmind.squad.repository.GrupoAlunosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
