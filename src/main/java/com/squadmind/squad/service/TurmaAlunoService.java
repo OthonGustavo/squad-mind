@@ -2,6 +2,7 @@ package com.squadmind.squad.service;
 
 import com.squadmind.squad.entity.TurmaAluno;
 import com.squadmind.squad.entity.Usuario;
+import com.squadmind.squad.enums.UsuarioTipo;
 import com.squadmind.squad.repository.TurmaAlunoRepository;
 import com.squadmind.squad.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class TurmaAlunoService {
         Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        if (!usuario.getTipo().equals("Aluno")){
-            throw new IllegalArgumentException("Usuário Informado não é professor");
+        if (!usuario.getTipo().equals(UsuarioTipo.ALUNO)){
+            throw new IllegalArgumentException("Usuário Informado não é aluno");
         }
 
         turmaAluno.setAlunoId(usuario);

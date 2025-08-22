@@ -2,6 +2,8 @@ package com.squadmind.squad.service;
 
 import com.squadmind.squad.entity.Turmas;
 import com.squadmind.squad.entity.Usuario;
+import com.squadmind.squad.enums.UsuarioTipo;
+import com.squadmind.squad.exception.ResourceNotFoundException;
 import com.squadmind.squad.repository.TurmasRepository;
 import com.squadmind.squad.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ public class TurmasService {
 
     public Turmas findById(Long id){
         Optional<Turmas> obj = turmasRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException("Turma não encontrada"));
     }
 
     public Turmas adicionarProfessor(Long turmaId, Long usuarioId){
@@ -34,7 +36,7 @@ public class TurmasService {
         Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        if (!usuario.getTipo().equals("Professor")){
+        if (!usuario.getTipo().equals(UsuarioTipo.PROFESSOR)){
             throw new IllegalArgumentException("Usuário Informado não é professor");
         }
 

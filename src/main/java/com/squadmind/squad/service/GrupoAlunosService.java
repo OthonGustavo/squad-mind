@@ -1,6 +1,7 @@
 package com.squadmind.squad.service;
 
 import com.squadmind.squad.entity.GrupoAlunos;
+import com.squadmind.squad.exception.ResourceNotFoundException;
 import com.squadmind.squad.repository.GrupoAlunosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class GrupoAlunosService {
 
     public GrupoAlunos findById(Long id){
         Optional<GrupoAlunos> obj = repository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException("Grupo de alunos não encontrado"));
     }
 
     public GrupoAlunos insert(GrupoAlunos obj){

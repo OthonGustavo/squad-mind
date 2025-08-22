@@ -1,5 +1,6 @@
 package com.squadmind.squad.entity;
 
+import com.squadmind.squad.enums.UsuarioTipo;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -39,13 +40,12 @@ public class Usuario implements Serializable {
     @Getter @Setter
     private String senha;
 
-    @Getter @Setter
     private String tipo;
 
     @Getter @Setter
     private String registro;
 
-    @Getter @Setter
+    @Getter
     @Column(name = "criado_em")
     private Instant criadoEm;
 
@@ -56,6 +56,16 @@ public class Usuario implements Serializable {
         this.tipo = tipo;
         this.registro = registro;
         this.criadoEm = criadoEm;
+    }
+
+    public UsuarioTipo getTipo(){
+        return UsuarioTipo.valueOf(tipo);
+    }
+
+    public void setTipo(UsuarioTipo tipo){
+        if (tipo != null){
+            this.tipo = tipo.getCode();
+        }
     }
 
 }
