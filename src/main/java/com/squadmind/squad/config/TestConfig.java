@@ -1,7 +1,8 @@
 package com.squadmind.squad.config;
 
 
-import com.squadmind.squad.repository.UsuarioRepository;
+import com.squadmind.squad.entity.GrupoAlunos;
+import com.squadmind.squad.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -14,10 +15,24 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private TurmasRepository turmasRepository;
+
+    @Autowired
+    private TurmaAlunoRepository turmaAlunoRepository;
+
+    @Autowired
+    private GruposRepository gruposRepository;
+
+    @Autowired
+    private GrupoAlunosRepository grupoAlunosRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
-        System.out.println(usuarioRepository.findAll());
+        turmasRepository.findAll().forEach(turma -> {
+            System.out.println(turma.getId() + " - " + turma.getNomeTurma()); // só campos simples
+        });
 
     }
 }

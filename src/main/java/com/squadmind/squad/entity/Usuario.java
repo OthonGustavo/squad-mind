@@ -13,19 +13,19 @@ import java.util.List;
 @Table(name = "usuarios")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
-@ToString
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
+    @ToString.Include
     private Long id;
 
-    @OneToMany(mappedBy = "usuarios")
+    @OneToMany(mappedBy = "professorId")
     private List<Turmas> turmas = new ArrayList<>();
 
-    @OneToMany(mappedBy = "usuarios")
+    @OneToMany(mappedBy = "alunoId")
     private List<TurmaAluno> turmaAlunos = new ArrayList<>();
 
     @OneToMany
@@ -34,17 +34,23 @@ public class Usuario implements Serializable {
     @OneToMany
     private List<Respostas> respostas = new ArrayList<>();
 
+    @ToString.Include
     @Getter @Setter
     private String nome;
 
+    @ToString.Include
     @Getter @Setter
     private String senha;
 
+    @Getter @Setter
+    @ToString.Include
     private String tipo;
 
+    @ToString.Include
     @Getter @Setter
     private String registro;
 
+    @ToString.Include
     @Getter
     @Column(name = "criado_em")
     private Instant criadoEm;
@@ -56,16 +62,6 @@ public class Usuario implements Serializable {
         this.tipo = tipo;
         this.registro = registro;
         this.criadoEm = criadoEm;
-    }
-
-    public UsuarioTipo getTipo(){
-        return UsuarioTipo.valueOf(tipo);
-    }
-
-    public void setTipo(UsuarioTipo tipo){
-        if (tipo != null){
-            this.tipo = tipo.getCode();
-        }
     }
 
 }

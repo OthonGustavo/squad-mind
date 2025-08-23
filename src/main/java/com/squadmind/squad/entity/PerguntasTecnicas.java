@@ -4,10 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -20,15 +17,20 @@ public class PerguntasTecnicas implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
+    @ToString.Include
     private Long id;
 
+    @ToString.Include
     @Getter @Setter
     private Integer questao;
 
+    @ToString.Include
     private String tipo;
+    @ToString.Include
     private String alternativa;
 
     @Getter @Setter
+    @ToString.Include
     private String descricaoPergunta;
 
     public PerguntasTecnicas(Integer questao, String tipo, String alternativa, String descricaoPergunta) {

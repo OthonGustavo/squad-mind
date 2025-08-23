@@ -1,10 +1,7 @@
 package com.squadmind.squad.entity;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,16 +17,20 @@ public class GrupoAlunos implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter @Setter
+    @ToString.Include
     private Long id;
 
+    @ToString.Include
     @ManyToOne
     @JoinColumn(name = "aluno_id")
-    private List<Usuario> alunoId = new ArrayList<>();
+    private Usuario usuarioId;
 
+    @ToString.Include
     @ManyToOne
     @JoinColumn(name = "grupo_id")
-    private List<Grupos> grupos = new ArrayList<>();
+    private Grupos grupo_alunos;
 
+    @ToString.Include
     @Column(name = "registro_aluno")
     private List<Usuario> registroAluno = new ArrayList<>();
 

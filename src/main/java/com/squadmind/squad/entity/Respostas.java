@@ -1,9 +1,7 @@
 package com.squadmind.squad.entity;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,35 +16,44 @@ public class Respostas implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ToString.Include
     private Long id;
 
+    @ToString.Include
     @Column(name = "respostas_json")
     private String respostas_json;
 
+    @ToString.Include
     @ManyToOne
     @JoinColumn(name = "aluno_id")
-    private List<Usuario> alunoId = new ArrayList<>();
+    private Usuario alunoId;
 
+    @ToString.Include
     @ManyToOne
     @JoinColumn(name = "turma_id")
-    private List<Turmas> turmasId = new ArrayList<>();
+    private Turmas turmasId;
 
+    @ToString.Include
     @Getter
     @Column(name = "pontuacao_d")
     private Integer pontuacaoD;
 
+    @ToString.Include
     @Getter
     @Column(name = "pontuacao_i")
     private Integer pontuacaoI;
 
+    @ToString.Include
     @Getter
     @Column(name = "pontuacao_s")
     private Integer pontuacaoS;
 
+    @ToString.Include
     @Getter
     @Column(name = "pontuacao_c")
     private Integer pontuacaoC;
 
+    @ToString.Include
     @Getter
     @Column(name = "perfil_dominante")
     private String perfilDominante;

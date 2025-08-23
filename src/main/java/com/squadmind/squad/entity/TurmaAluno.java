@@ -1,10 +1,7 @@
 package com.squadmind.squad.entity;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -18,19 +15,23 @@ public class TurmaAluno implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ToString.Include
     @Getter @Setter
     private Long id;
 
+    @ToString.Include
     @ManyToOne
     @JoinColumn(name = "aluno_id")
     @Getter @Setter
     private Usuario alunoId;
 
+    @ToString.Include
     @ManyToOne
     @JoinColumn(name = "turma_id")
     @Getter @Setter
-    private Turmas turmaId;
+    private Turmas turmas;
 
+    @ToString.Include
     @Column(name = "data_entrada")
     private Instant dataEntrada;
 
