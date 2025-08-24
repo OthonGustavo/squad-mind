@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 public class Turmas implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id

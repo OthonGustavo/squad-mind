@@ -30,9 +30,7 @@ public class TestConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        turmasRepository.findAll().forEach(turma -> {
-            System.out.println(turma.getId() + " - " + turma.getNomeTurma()); // só campos simples
-        });
+        System.out.println(grupoAlunosRepository.findAll());
 
     }
 }

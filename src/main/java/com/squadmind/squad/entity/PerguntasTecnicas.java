@@ -6,12 +6,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 public class PerguntasTecnicas implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id

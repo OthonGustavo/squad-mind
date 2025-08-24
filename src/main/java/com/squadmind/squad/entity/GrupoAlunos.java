@@ -3,6 +3,7 @@ package com.squadmind.squad.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 public class GrupoAlunos implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -20,18 +22,15 @@ public class GrupoAlunos implements Serializable {
     @ToString.Include
     private Long id;
 
-    @ToString.Include
     @ManyToOne
     @JoinColumn(name = "aluno_id")
     private Usuario usuarioId;
 
-    @ToString.Include
     @ManyToOne
     @JoinColumn(name = "grupo_id")
     private Grupos grupo_alunos;
 
-    @ToString.Include
     @Column(name = "registro_aluno")
-    private List<Usuario> registroAluno = new ArrayList<>();
+    private Usuario registroAluno;
 
 }

@@ -3,6 +3,7 @@ package com.squadmind.squad.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 
@@ -11,6 +12,7 @@ import java.time.Instant;
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 public class TurmaAluno implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -39,4 +41,5 @@ public class TurmaAluno implements Serializable {
         this.id = id;
         this.dataEntrada = dataEntrada;
     }
+
 }

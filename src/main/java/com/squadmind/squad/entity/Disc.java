@@ -9,11 +9,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 public class Disc implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
