@@ -1,7 +1,18 @@
 package com.squadmind.squad.exception;
 
-public class ResourceNotFoundException extends RuntimeException {
-    public ResourceNotFoundException(String message) {
-        super(message);
+import java.io.Serial;
+import java.io.Serializable;
+
+public class ResourceNotFoundException extends RuntimeException implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    public ResourceNotFoundException(){
+
     }
+
+    public ResourceNotFoundException(Object message) {
+        super(("Resource not found. Id" + message));
+    }
+
 }

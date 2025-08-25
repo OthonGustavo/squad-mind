@@ -1,8 +1,10 @@
 package com.squadmind.squad.service;
 
 import com.squadmind.squad.entity.Grupos;
+import com.squadmind.squad.entity.Turmas;
 import com.squadmind.squad.exception.ResourceNotFoundException;
 import com.squadmind.squad.repository.GruposRepository;
+import com.squadmind.squad.repository.TurmasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ public class GruposService {
 
     @Autowired
     GruposRepository repository;
+
+    @Autowired
+    TurmasRepository TurmasRepository;
 
     public List<Grupos> findAll(){
         return repository.findAll();

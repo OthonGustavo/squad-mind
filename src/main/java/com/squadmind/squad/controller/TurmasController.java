@@ -2,7 +2,6 @@ package com.squadmind.squad.controller;
 
 
 import com.squadmind.squad.entity.Turmas;
-import com.squadmind.squad.entity.Turmas;
 import com.squadmind.squad.service.TurmasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

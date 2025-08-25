@@ -7,6 +7,8 @@ import lombok.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,21 +35,33 @@ public class Turmas implements Serializable {
     @Column(name = "chave_entrada")
     private String chaveEntrada;
 
-    @ToString.Include
     @ManyToOne
     @JoinColumn(name = "professor_id")
-    @Getter @Setter
     private Usuario professorId;
 
-    @ToString.Include
     @OneToMany(mappedBy = "turmas")
-    @Getter @Setter
     @JsonIgnore
     private List<TurmaAluno> turmaAlunos = new ArrayList<>();
 
     @ToString.Include
-    @Getter
     @Column(name = "criado_em")
     private Instant criadoEm;
+
+    public Turmas(Instant criadoEm, String nomeTurma, Long id, String chaveEntrada) {
+        this.criadoEm = criadoEm;
+        this.nomeTurma = nomeTurma;
+        this.id = id;
+        this.chaveEntrada = chaveEntrada;
+    }
+
+    public String getCriadoEm() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
+                .withZone(ZoneId.systemDefault());
+        return formatter.format(criadoEm);
+    }
+
+    public void setCriadoEm() {
+        this.criadoEm = Instant.now();
+    }
 
 }

@@ -22,15 +22,18 @@ public class GrupoAlunos implements Serializable {
     @ToString.Include
     private Long id;
 
+    @Getter
     @ManyToOne
     @JoinColumn(name = "aluno_id")
-    private Usuario usuarioId;
+    private Usuario aluno;
 
+    @Getter
     @ManyToOne
     @JoinColumn(name = "grupo_id")
     private Grupos grupo_alunos;
 
+    @Getter @Setter
     @Column(name = "registro_aluno")
-    private Usuario registroAluno;
+    private String registroAluno;
 
 }

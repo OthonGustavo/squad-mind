@@ -18,19 +18,20 @@ public class Respostas implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     @ToString.Include
     private Long id;
 
-    @ToString.Include
+    @Getter
     @Column(name = "respostas_json")
     private String respostas_json;
 
-    @ToString.Include
+    @Getter
     @ManyToOne
     @JoinColumn(name = "aluno_id")
     private Usuario alunoId;
 
-    @ToString.Include
+    @Getter
     @ManyToOne
     @JoinColumn(name = "turma_id")
     private Turmas turmasId;
