@@ -1,5 +1,6 @@
 package com.squadmind.squad.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,11 +24,14 @@ public class Grupos implements Serializable {
     private Long id;
 
     @ToString.Include
+    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "turma_id")
-    private Turmas turmaId;
+    @JsonIgnore
+    private Turmas turmas;
 
     @ToString.Include
+    @Getter @Setter
     @Column(name = "numero_grupo")
     private Integer numeroGrupo;
     

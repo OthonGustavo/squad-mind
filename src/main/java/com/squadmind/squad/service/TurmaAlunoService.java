@@ -1,10 +1,12 @@
 package com.squadmind.squad.service;
 
 import com.squadmind.squad.entity.TurmaAluno;
+import com.squadmind.squad.entity.Turmas;
 import com.squadmind.squad.entity.Usuario;
 import com.squadmind.squad.enums.UsuarioTipo;
 import com.squadmind.squad.exception.ResourceNotFoundException;
 import com.squadmind.squad.repository.TurmaAlunoRepository;
+import com.squadmind.squad.repository.TurmasRepository;
 import com.squadmind.squad.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,42 +17,50 @@ import java.util.Optional;
 @Service
 public class TurmaAlunoService {
 
-    @Autowired
-    TurmaAlunoRepository TurmaAlunoRepository;
+    private final TurmaAlunoRepository turmaAlunoRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final TurmasRepository turmaRepository;
 
     @Autowired
-    UsuarioRepository usuarioRepository;
-
-    public List<TurmaAluno> findAll(){
-        return TurmaAlunoRepository.findAll();
+    public TurmaAlunoService(TurmaAlunoRepository turmaAlunoRepository,
+                             UsuarioRepository usuarioRepository,
+                             TurmasRepository turmaRepository) {
+        this.turmaAlunoRepository = turmaAlunoRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.turmaRepository = turmaRepository;
     }
 
-    public TurmaAluno findById(Long id){
-        Optional<TurmaAluno> obj = TurmaAlunoRepository.findById(id);
-        return obj.orElseThrow(() -> new ResourceNotFoundException("Turma de alunos não encontrada."));
-    }
+    // Matricular aluno em uma turma
+    public TurmaAluno matricularAlunoEmTurma(Long alunoId, Long turmaId) {
+        Usuario aluno = usuarioRepository.findById(alunoId)
+                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
 
-    public TurmaAluno adicionarAluno(Long turmaId, Long usuarioId){
-        TurmaAluno turmaAluno = TurmaAlunoRepository.findById(turmaId)
+        Turmas turma = turmaRepository.findById(turmaId)
                 .orElseThrow(() -> new RuntimeException("Turma não encontrada"));
-        Usuario usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        if (!usuario.getTipo().equals("aluno")){
-            throw new IllegalArgumentException("Usuário Informado não é aluno");
-        }
+        TurmaAluno turmaAluno = new TurmaAluno();
+        turmaAluno.setAlunos(aluno);
+        turmaAluno.setTurmas(turma);
+        turmaAluno.setCriadoEm(); // registra data de entrada
 
-        turmaAluno.setAlunoId(usuario);
-        return TurmaAlunoRepository.save(turmaAluno);
-
+        return turmaAlunoRepository.save(turmaAluno);
     }
 
-    public TurmaAluno insert(TurmaAluno obj){
-        return TurmaAlunoRepository.save(obj);
+    // Listar alunos de uma turma
+    public List<TurmaAluno> listarAlunosDaTurma(Long turmaId) {
+        return turmaAlunoRepository.findByTurmas_Id(turmaId);
     }
 
-    public void delete(Long id){
-        TurmaAlunoRepository.deleteById(id);
+    // Listar turmas de um aluno
+    public List<TurmaAluno> listarTurmasDoAluno(Long alunoId) {
+        return turmaAlunoRepository.findByAluno_Id(alunoId);
+    }
+
+    // Remover aluno da turma
+    public void removerAlunoDaTurma(Long alunoId, Long turmaId) {
+        TurmaAluno turmaAluno = turmaAlunoRepository.findByAluno_IdAndTurmas_Id(alunoId, turmaId)
+                .orElseThrow(() -> new RuntimeException("Relação aluno/turma não encontrada"));
+        turmaAlunoRepository.delete(turmaAluno);
     }
 
 }

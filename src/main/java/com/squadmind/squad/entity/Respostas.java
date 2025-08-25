@@ -22,42 +22,42 @@ public class Respostas implements Serializable {
     @ToString.Include
     private Long id;
 
-    @Getter
+    @Getter @Setter
     @Column(name = "respostas_json")
     private String respostas_json;
 
-    @Getter
+    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "aluno_id")
     private Usuario alunoId;
 
-    @Getter
+    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "turma_id")
     private Turmas turmasId;
 
     @ToString.Include
-    @Getter
+    @Getter @Setter
     @Column(name = "pontuacao_d")
     private Integer pontuacaoD;
 
     @ToString.Include
-    @Getter
+    @Getter @Setter
     @Column(name = "pontuacao_i")
     private Integer pontuacaoI;
 
     @ToString.Include
-    @Getter
+    @Getter @Setter
     @Column(name = "pontuacao_s")
     private Integer pontuacaoS;
 
     @ToString.Include
-    @Getter
+    @Getter @Setter
     @Column(name = "pontuacao_c")
     private Integer pontuacaoC;
 
     @ToString.Include
-    @Getter
+    @Getter @Setter
     @Column(name = "perfil_dominante")
     private String perfilDominante;
 

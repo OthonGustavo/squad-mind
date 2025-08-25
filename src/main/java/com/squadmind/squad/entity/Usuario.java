@@ -27,10 +27,10 @@ public class Usuario implements Serializable {
     @ToString.Include
     private Long id;
 
-    @OneToMany(mappedBy = "professorId")
+    @OneToMany(mappedBy = "professor")
     private List<Turmas> turmas = new ArrayList<>();
 
-    @OneToMany(mappedBy = "alunoId")
+    @OneToMany(mappedBy = "alunos")
     private List<TurmaAluno> turmaAlunos = new ArrayList<>();
 
     @OneToMany(mappedBy = "aluno")

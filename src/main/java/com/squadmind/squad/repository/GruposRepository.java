@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface GruposRepository extends JpaRepository<Grupos,Long> {
 
-    List<Grupos> findByTurmaId(Long turmaId);
+    List<Grupos> findByTurma_Id(Long turmaId);
 
 }

@@ -33,15 +33,22 @@ public class Turmas implements Serializable {
 
     @ToString.Include
     @Column(name = "chave_entrada")
+    @Getter
     private String chaveEntrada;
 
     @ManyToOne
     @JoinColumn(name = "professor_id")
-    private Usuario professorId;
+    @JsonIgnore
+    @Getter @Setter
+    private Usuario professor;
 
     @OneToMany(mappedBy = "turmas")
     @JsonIgnore
     private List<TurmaAluno> turmaAlunos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "turmas")
+    @JsonIgnore
+    private List<Grupos> grupos = new ArrayList<>();
 
     @ToString.Include
     @Column(name = "criado_em")

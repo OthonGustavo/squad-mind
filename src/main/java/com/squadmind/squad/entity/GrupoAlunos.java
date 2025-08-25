@@ -22,12 +22,12 @@ public class GrupoAlunos implements Serializable {
     @ToString.Include
     private Long id;
 
-    @Getter
+    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "aluno_id")
     private Usuario aluno;
 
-    @Getter
+    @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "grupo_id")
     private Grupos grupo_alunos;

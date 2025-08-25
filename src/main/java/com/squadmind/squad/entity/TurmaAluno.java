@@ -28,7 +28,7 @@ public class TurmaAluno implements Serializable {
     @ManyToOne
     @JoinColumn(name = "aluno_id")
     @Getter @Setter
-    private Usuario alunoId;
+    private Usuario alunos;
 
     @ToString.Include
     @ManyToOne

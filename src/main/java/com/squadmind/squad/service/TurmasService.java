@@ -1,10 +1,12 @@
 package com.squadmind.squad.service;
 
+import com.squadmind.squad.entity.Grupos;
 import com.squadmind.squad.entity.Turmas;
 import com.squadmind.squad.entity.Usuario;
 import com.squadmind.squad.enums.UsuarioTipo;
 import com.squadmind.squad.exception.DatabaseException;
 import com.squadmind.squad.exception.ResourceNotFoundException;
+import com.squadmind.squad.repository.GruposRepository;
 import com.squadmind.squad.repository.TurmasRepository;
 import com.squadmind.squad.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,34 +20,44 @@ import java.util.Optional;
 @Service
 public class TurmasService {
 
-    @Autowired
-    TurmasRepository turmasRepository;
+    private final TurmasRepository turmasRepository;
+    private final GruposRepository gruposRepository;
 
     @Autowired
-    UsuarioRepository usuarioRepository;
+    public TurmasService(TurmasRepository turmaRepository, GruposRepository grupoRepository) {
+        this.turmasRepository = turmaRepository;
+        this.gruposRepository = grupoRepository;
+    }
 
-    public List<Turmas> findAll(){
+    // Criar nova turma
+    public Turmas criarTurma(Turmas turma) {
+        turma.setCriadoEm();
+        return turmasRepository.save(turma);
+    }
+
+    // Buscar turma por id
+    public Turmas buscarTurma(Long id) {
+        return turmasRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Turma não encontrada"));
+    }
+
+    // Buscar todas as turmas
+    public List<Turmas> listarTurmas() {
         return turmasRepository.findAll();
     }
 
-    public Turmas findById(Long id){
-        Optional<Turmas> obj = turmasRepository.findById(id);
-        return obj.orElseThrow(() -> new ResourceNotFoundException("Turma não encontrada"));
-    }
-
-    public Turmas adicionarProfessor(Long turmaId, Long usuarioId){
+    // Criar grupo dentro de uma turma
+    public Grupos criarGrupo(Long turmaId, Grupos grupo) {
         Turmas turma = turmasRepository.findById(turmaId)
                 .orElseThrow(() -> new RuntimeException("Turma não encontrada"));
-        Usuario usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        if (!usuario.getTipo().equals("professor")){
-            throw new IllegalArgumentException("Usuário Informado não é professor");
-        }
+        grupo.setTurmas(turma);
+        return gruposRepository.save(grupo);
+    }
 
-        turma.setId(turmaId);
-        return turmasRepository.save(turma);
-
+    // Buscar grupos de uma turma
+    public List<Grupos> listarGruposPorTurma(Long turmaId) {
+        return gruposRepository.findByTurma_Id(turmaId);
     }
 
     public Turmas insert(Turmas obj){

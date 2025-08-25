@@ -14,27 +14,52 @@ import java.util.Optional;
 @Service
 public class GruposService {
 
-    @Autowired
-    GruposRepository repository;
 
-    @Autowired
-    TurmasRepository TurmasRepository;
+    private final GruposRepository grupoRepository;
+    private final TurmasRepository turmaRepository;
 
-    public List<Grupos> findAll(){
-        return repository.findAll();
+    public GruposService(GruposRepository grupoRepository, TurmasRepository turmaRepository) {
+        this.grupoRepository = grupoRepository;
+        this.turmaRepository = turmaRepository;
     }
 
-    public Grupos findById(Long id){
-        Optional<Grupos> obj = repository.findById(id);
-        return obj.orElseThrow(() -> new ResourceNotFoundException("Grupo não encontrado"));
+    // Criar grupo em uma turma
+    public Grupos criarGrupo(Long turmaId, Grupos grupo) {
+        Turmas turma = turmaRepository.findById(turmaId)
+                .orElseThrow(() -> new RuntimeException("Turma não encontrada"));
+
+        grupo.setTurmas(turma); // associa grupo à turma
+        return grupoRepository.save(grupo);
     }
 
-    public Grupos insert(Grupos obj){
-        return repository.save(obj);
+    // Listar todos os grupos
+    public List<Grupos> listarGrupos() {
+        return grupoRepository.findAll();
     }
 
-    public void delete(Long id){
-        repository.deleteById(id);
+    // Listar grupos de uma turma específica
+    public List<Grupos> listarGruposPorTurma(Long turmaId) {
+        return grupoRepository.findByTurma_Id(turmaId);
     }
+
+    // Buscar grupo por ID
+    public Grupos buscarGrupo(Long grupoId) {
+        return grupoRepository.findById(grupoId)
+                .orElseThrow(() -> new RuntimeException("Grupo não encontrado"));
+    }
+
+    // Atualizar grupo (por exemplo, alterar número do grupo)
+    public Grupos atualizarGrupo(Long grupoId, Integer numeroGrupo) {
+        Grupos grupo = buscarGrupo(grupoId);
+        grupo.setNumeroGrupo(numeroGrupo);
+        return grupoRepository.save(grupo);
+    }
+
+    // Remover grupo
+    public void removerGrupo(Long grupoId) {
+        Grupos grupo = buscarGrupo(grupoId);
+        grupoRepository.delete(grupo);
+    }
+
 
 }
