@@ -1,88 +1,92 @@
 package com.squadmind.squad.service;
 
+import com.squadmind.squad.dto.DTOMapper;
+import com.squadmind.squad.dto.RespostasDTO;
 import com.squadmind.squad.entity.Respostas;
 import com.squadmind.squad.entity.Turmas;
 import com.squadmind.squad.entity.Usuario;
+import com.squadmind.squad.exception.DatabaseException;
 import com.squadmind.squad.exception.ResourceNotFoundException;
 import com.squadmind.squad.repository.RespostasRepository;
 import com.squadmind.squad.repository.TurmasRepository;
 import com.squadmind.squad.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RespostasService {
 
-
     private final RespostasRepository respostasRepository;
     private final UsuarioRepository usuarioRepository;
-    private final TurmasRepository turmaRepository;
+    private final TurmasRepository turmasRepository;
 
     @Autowired
     public RespostasService(RespostasRepository respostasRepository,
                             UsuarioRepository usuarioRepository,
-                            TurmasRepository turmaRepository) {
+                            TurmasRepository turmasRepository) {
         this.respostasRepository = respostasRepository;
         this.usuarioRepository = usuarioRepository;
-        this.turmaRepository = turmaRepository;
+        this.turmasRepository = turmasRepository;
     }
 
-    // Criar respostas de um aluno em uma turma
-    public Respostas criarRespostas(Long alunoId, Long turmaId, Respostas respostas) {
+    // Criar resposta
+    public RespostasDTO criarResposta(Long alunoId, Long turmaId, Respostas respostas) {
         Usuario aluno = usuarioRepository.findById(alunoId)
-                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
-
-        Turmas turma = turmaRepository.findById(turmaId)
-                .orElseThrow(() -> new RuntimeException("Turma não encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Aluno não encontrado"));
+        Turmas turma = turmasRepository.findById(turmaId)
+                .orElseThrow(() -> new ResourceNotFoundException("Turma não encontrada"));
 
         respostas.setAlunoId(aluno);
         respostas.setTurmasId(turma);
 
-        return respostasRepository.save(respostas);
+        Respostas salvo = respostasRepository.save(respostas);
+        return DTOMapper.toRespostasDTO(salvo);
+    }
+
+    // Buscar resposta por ID
+    public RespostasDTO buscarResposta(Long id) {
+        Respostas resposta = respostasRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Resposta não encontrada"));
+        return DTOMapper.toRespostasDTO(resposta);
     }
 
     // Listar todas as respostas
-    public List<Respostas> listarRespostas() {
-        return respostasRepository.findAll();
+    public List<RespostasDTO> listarRespostas() {
+        return respostasRepository.findAll()
+                .stream()
+                .map(DTOMapper::toRespostasDTO)
+                .collect(Collectors.toList());
     }
 
-    // Listar respostas de um aluno específico
-    public List<Respostas> listarRespostasDoAluno(Long alunoId) {
-        return respostasRepository.findByAlunoId_Id(alunoId);
+    // Atualizar resposta
+    public RespostasDTO atualizarResposta(Long id, Respostas respostasAtualizada) {
+        Respostas resposta = respostasRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Resposta não encontrada"));
+
+        resposta.setPontuacaoD(respostasAtualizada.getPontuacaoD());
+        resposta.setPontuacaoI(respostasAtualizada.getPontuacaoI());
+        resposta.setPontuacaoS(respostasAtualizada.getPontuacaoS());
+        resposta.setPontuacaoC(respostasAtualizada.getPontuacaoC());
+        resposta.setPerfilDominante(respostasAtualizada.getPerfilDominante());
+        resposta.setRespostas_json(respostasAtualizada.getRespostas_json());
+
+        Respostas salvo = respostasRepository.save(resposta);
+        return DTOMapper.toRespostasDTO(salvo);
     }
 
-    // Listar respostas de uma turma específica
-    public List<Respostas> listarRespostasDaTurma(Long turmaId) {
-        return respostasRepository.findByTurmasId_Id(turmaId);
+    // Deletar resposta
+    public void deletarResposta(Long id) {
+        try {
+            respostasRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Resposta não encontrada");
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Não é possível deletar devido a restrições de integridade");
+        }
     }
-
-    // Buscar respostas por ID
-    public Respostas buscarRespostas(Long respostasId) {
-        return respostasRepository.findById(respostasId)
-                .orElseThrow(() -> new RuntimeException("Respostas não encontradas"));
-    }
-
-    // Atualizar respostas (pontuações e perfil)
-    public Respostas atualizarRespostas(Long respostasId, Respostas respostasAtualizadas) {
-        Respostas respostas = buscarRespostas(respostasId);
-
-        respostas.setPontuacaoD(respostasAtualizadas.getPontuacaoD());
-        respostas.setPontuacaoI(respostasAtualizadas.getPontuacaoI());
-        respostas.setPontuacaoS(respostasAtualizadas.getPontuacaoS());
-        respostas.setPontuacaoC(respostasAtualizadas.getPontuacaoC());
-        respostas.setPerfilDominante(respostasAtualizadas.getPerfilDominante());
-        respostas.setRespostas_json(respostasAtualizadas.getRespostas_json());
-
-        return respostasRepository.save(respostas);
-    }
-
-    // Remover respostas
-    public void removerRespostas(Long respostasId) {
-        Respostas respostas = buscarRespostas(respostasId);
-        respostasRepository.delete(respostas);
-    }
-
 }

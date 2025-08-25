@@ -33,10 +33,10 @@ public class TurmaAlunoService {
     // Matricular aluno em uma turma
     public TurmaAluno matricularAlunoEmTurma(Long alunoId, Long turmaId) {
         Usuario aluno = usuarioRepository.findById(alunoId)
-                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Aluno não encontrado"));
 
         Turmas turma = turmaRepository.findById(turmaId)
-                .orElseThrow(() -> new RuntimeException("Turma não encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Turma não encontrada"));
 
         TurmaAluno turmaAluno = new TurmaAluno();
         turmaAluno.setAlunos(aluno);
@@ -59,7 +59,7 @@ public class TurmaAlunoService {
     // Remover aluno da turma
     public void removerAlunoDaTurma(Long alunoId, Long turmaId) {
         TurmaAluno turmaAluno = turmaAlunoRepository.findByAluno_IdAndTurmas_Id(alunoId, turmaId)
-                .orElseThrow(() -> new RuntimeException("Relação aluno/turma não encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Relação aluno/turma não encontrada"));
         turmaAlunoRepository.delete(turmaAluno);
     }
 

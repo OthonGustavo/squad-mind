@@ -1,42 +1,47 @@
 package com.squadmind.squad.controller;
 
-
+import com.squadmind.squad.dto.GruposDTO;
 import com.squadmind.squad.entity.Grupos;
 import com.squadmind.squad.service.GruposService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/grupos")
+@RequestMapping("/api/grupos")
 public class GruposController {
 
     @Autowired
-    private GruposService service;
+    private GruposService gruposService;
+
+    @PostMapping("/{turmaId}")
+    public GruposDTO criarGrupo(@PathVariable Long turmaId, @RequestBody Grupos grupo) {
+        return gruposService.criarGrupo(turmaId, grupo);
+    }
+
+    @GetMapping("/{id}")
+    public GruposDTO buscarGrupo(@PathVariable Long id) {
+        return gruposService.buscarGrupo(id);
+    }
 
     @GetMapping
-    public ResponseEntity<List<Grupos>> findAll(){
-        List<Grupos> lista = service.findAll();
-        return ResponseEntity.ok().body(lista);
+    public List<GruposDTO> listarGrupos() {
+        return gruposService.listarGrupos();
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Grupos> findById(@PathVariable Long id){
-        Grupos obj = service.findById(id);
-        return ResponseEntity.ok().body(obj);
+    @PutMapping("/{id}")
+    public GruposDTO atualizarGrupo(@PathVariable Long id, @RequestBody Grupos grupoAtualizado) {
+        return gruposService.atualizarGrupo(id, grupoAtualizado);
     }
 
-
-    @PostMapping
-    public ResponseEntity<Grupos> insert(@RequestBody Grupos obj){
-        obj = service.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
-                buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(obj);
+    @DeleteMapping("/{id}")
+    public void deletarGrupo(@PathVariable Long id) {
+        gruposService.deletarGrupo(id);
     }
 
+    @GetMapping("/turma/{turmaId}")
+    public List<GruposDTO> listarGruposPorTurma(@PathVariable Long turmaId) {
+        return gruposService.listarGruposPorTurma(turmaId);
+    }
 }

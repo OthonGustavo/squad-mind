@@ -1,42 +1,44 @@
 package com.squadmind.squad.controller;
 
-
-import com.squadmind.squad.entity.TurmaAluno;
-import com.squadmind.squad.service.TurmaAlunoService;
+import com.squadmind.squad.dto.GrupoAlunosDTO;
+import com.squadmind.squad.service.GrupoAlunosService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/turmaAluno")
+@RequestMapping("/api/turma-alunos")
 public class TurmaAlunoController {
 
     @Autowired
-    private TurmaAlunoService service;
+    private GrupoAlunosService grupoAlunosService;
 
-    @GetMapping
-    public ResponseEntity<List<TurmaAluno>> findAll(){
-        List<TurmaAluno> lista = service.findAll();
-        return ResponseEntity.ok().body(lista);
-    }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<TurmaAluno> findById(@PathVariable Long id){
-        TurmaAluno obj = service.findById(id);
-        return ResponseEntity.ok().body(obj);
-    }
-
-
+    // Criar associação aluno → grupo
     @PostMapping
-    public ResponseEntity<TurmaAluno> insert(@RequestBody TurmaAluno obj){
-        obj = service.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
-                buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(obj);
+    public GrupoAlunosDTO criarGrupoAluno(@RequestBody GrupoAlunosDTO input) {
+        return grupoAlunosService.criarGrupoAluno(
+                input.getAlunoId(),
+                input.getGrupoId(),
+                input.getRegistroAluno()
+        );
     }
 
+    // Buscar registro por ID
+    @GetMapping("/{id}")
+    public GrupoAlunosDTO buscarGrupoAluno(@PathVariable Long id) {
+        return grupoAlunosService.buscarGrupoAluno(id);
+    }
+
+    // Listar todos os registros
+    @GetMapping
+    public List<GrupoAlunosDTO> listarGrupoAlunos() {
+        return grupoAlunosService.listarGrupoAlunos();
+    }
+
+    // Deletar registro
+    @DeleteMapping("/{id}")
+    public void deletarGrupoAluno(@PathVariable Long id) {
+        grupoAlunosService.deletarGrupoAluno(id);
+    }
 }

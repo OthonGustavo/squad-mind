@@ -62,6 +62,7 @@ public class Usuario implements Serializable {
     @ToString.Include
     @Column(name = "criado_em")
     @CreationTimestamp
+    @Getter
     private Instant criadoEm;
 
     public Usuario(Long id, String nome, String email, String senha, String tipo, String registro, Instant criadoEm) {
@@ -72,12 +73,6 @@ public class Usuario implements Serializable {
         this.tipo = tipo;
         this.registro = registro;
         this.criadoEm = criadoEm;
-    }
-
-    public String getCriadoEm() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
-                .withZone(ZoneId.systemDefault());
-        return formatter.format(criadoEm);
     }
 
     public void setCriadoEm() {

@@ -1,21 +1,20 @@
 package com.squadmind.squad.service;
 
+import com.squadmind.squad.dto.DTOMapper;
+import com.squadmind.squad.dto.TurmasDTO;
 import com.squadmind.squad.entity.Grupos;
 import com.squadmind.squad.entity.Turmas;
-import com.squadmind.squad.entity.Usuario;
-import com.squadmind.squad.enums.UsuarioTipo;
 import com.squadmind.squad.exception.DatabaseException;
 import com.squadmind.squad.exception.ResourceNotFoundException;
 import com.squadmind.squad.repository.GruposRepository;
 import com.squadmind.squad.repository.TurmasRepository;
-import com.squadmind.squad.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TurmasService {
@@ -30,59 +29,60 @@ public class TurmasService {
     }
 
     // Criar nova turma
-    public Turmas criarTurma(Turmas turma) {
+    public TurmasDTO criarTurma(Turmas turma) {
         turma.setCriadoEm();
-        return turmasRepository.save(turma);
+        Turmas salvo = turmasRepository.save(turma);
+        return DTOMapper.toTurmasDTO(salvo);
     }
 
     // Buscar turma por id
-    public Turmas buscarTurma(Long id) {
-        return turmasRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Turma não encontrada"));
+    public TurmasDTO buscarTurma(Long id) {
+        Turmas turma = turmasRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Turma não encontrada"));
+        return DTOMapper.toTurmasDTO(turma);
     }
 
     // Buscar todas as turmas
-    public List<Turmas> listarTurmas() {
-        return turmasRepository.findAll();
+    public List<TurmasDTO> listarTurmas() {
+        return turmasRepository.findAll()
+                .stream()
+                .map(DTOMapper::toTurmasDTO)
+                .collect(Collectors.toList());
+    }
+
+    // Atualizar turma
+    public TurmasDTO atualizarTurma(Long turmaId, Turmas turmaAtualizada) {
+        Turmas turma = turmasRepository.findById(turmaId)
+                .orElseThrow(() -> new ResourceNotFoundException("Turma não encontrada"));
+
+        turma.setNomeTurma(turmaAtualizada.getNomeTurma());
+        turma.setChaveEntrada(turmaAtualizada.getChaveEntrada());
+
+        Turmas salvo = turmasRepository.save(turma);
+        return DTOMapper.toTurmasDTO(salvo);
+    }
+
+    // Deletar turma
+    public void deletarTurma(Long turmaId) {
+        try {
+            turmasRepository.deleteById(turmaId);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Turma não encontrada");
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Não é possível deletar a turma devido a restrições de integridade");
+        }
     }
 
     // Criar grupo dentro de uma turma
-    public Grupos criarGrupo(Long turmaId, Grupos grupo) {
+    public TurmasDTO criarGrupo(Long turmaId, Grupos grupo) {
         Turmas turma = turmasRepository.findById(turmaId)
-                .orElseThrow(() -> new RuntimeException("Turma não encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Turma não encontrada"));
 
         grupo.setTurmas(turma);
-        return gruposRepository.save(grupo);
+        gruposRepository.save(grupo);
+        return DTOMapper.toTurmasDTO(turma); // retorna a turma atualizada com o grupo criado
     }
 
-    // Buscar grupos de uma turma
-    public List<Grupos> listarGruposPorTurma(Long turmaId) {
-        return gruposRepository.findByTurma_Id(turmaId);
-    }
-
-    public Turmas insert(Turmas obj){
-        return turmasRepository.save(obj);
-    }
-
-    public void delete(Long id){
-        try {
-            turmasRepository.deleteById(id);
-        }
-        catch (EmptyResultDataAccessException e){
-            throw new ResourceNotFoundException(id);
-        } catch (DataIntegrityViolationException e) {
-            throw new DatabaseException(e.getMessage());
-        }
-    }
-
-    public Turmas update(Long id, Turmas obj){
-        Turmas entity = turmasRepository.getReferenceById(id);
-        updateData(entity, obj);
-        return turmasRepository.save(entity);
-    }
-
-    private void updateData(Turmas entity, Turmas obj) {
-        entity.setNomeTurma(obj.getNomeTurma());
-    }
-
+    // Listar grupos de uma turma (opcional: pode criar DTO de grupo se quiser)
+    // public List<GruposDTO> listarGruposPorTurma(Long turmaId) {...}
 }

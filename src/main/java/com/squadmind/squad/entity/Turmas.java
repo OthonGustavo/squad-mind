@@ -3,6 +3,7 @@ package com.squadmind.squad.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -33,7 +34,7 @@ public class Turmas implements Serializable {
 
     @ToString.Include
     @Column(name = "chave_entrada")
-    @Getter
+    @Getter @Setter
     private String chaveEntrada;
 
     @ManyToOne
@@ -51,6 +52,8 @@ public class Turmas implements Serializable {
     private List<Grupos> grupos = new ArrayList<>();
 
     @ToString.Include
+    @Getter
+    @CreationTimestamp
     @Column(name = "criado_em")
     private Instant criadoEm;
 
@@ -59,12 +62,6 @@ public class Turmas implements Serializable {
         this.nomeTurma = nomeTurma;
         this.id = id;
         this.chaveEntrada = chaveEntrada;
-    }
-
-    public String getCriadoEm() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
-                .withZone(ZoneId.systemDefault());
-        return formatter.format(criadoEm);
     }
 
     public void setCriadoEm() {

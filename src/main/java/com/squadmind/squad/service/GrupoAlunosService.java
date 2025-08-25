@@ -1,72 +1,78 @@
 package com.squadmind.squad.service;
 
+import com.squadmind.squad.dto.DTOMapper;
+import com.squadmind.squad.dto.GrupoAlunosDTO;
 import com.squadmind.squad.entity.GrupoAlunos;
 import com.squadmind.squad.entity.Grupos;
 import com.squadmind.squad.entity.Usuario;
+import com.squadmind.squad.exception.DatabaseException;
 import com.squadmind.squad.exception.ResourceNotFoundException;
 import com.squadmind.squad.repository.GrupoAlunosRepository;
 import com.squadmind.squad.repository.GruposRepository;
 import com.squadmind.squad.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class GrupoAlunosService {
 
     private final GrupoAlunosRepository grupoAlunosRepository;
     private final UsuarioRepository usuarioRepository;
-    private final GruposRepository grupoRepository;
+    private final GruposRepository gruposRepository;
 
     @Autowired
     public GrupoAlunosService(GrupoAlunosRepository grupoAlunosRepository,
                               UsuarioRepository usuarioRepository,
-                              GruposRepository grupoRepository) {
+                              GruposRepository gruposRepository) {
         this.grupoAlunosRepository = grupoAlunosRepository;
         this.usuarioRepository = usuarioRepository;
-        this.grupoRepository = grupoRepository;
+        this.gruposRepository = gruposRepository;
     }
 
-    // Adicionar aluno a um grupo
-    public GrupoAlunos adicionarAlunoAoGrupo(Long alunoId, Long grupoId, String registroAluno) {
+    // Criar associação aluno → grupo
+    public GrupoAlunosDTO criarGrupoAluno(Long alunoId, Long grupoId, String registroAluno) {
         Usuario aluno = usuarioRepository.findById(alunoId)
-                .orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
-
-        Grupos grupo = grupoRepository.findById(grupoId)
-                .orElseThrow(() -> new RuntimeException("Grupo não encontrado"));
-
-        // Evitar duplicidade
-        boolean jaExiste = grupoAlunosRepository.existsByAluno_IdAndGrupo_Alunos_Id(alunoId, grupoId);
-        if (jaExiste) {
-            throw new RuntimeException("Aluno já está nesse grupo");
-        }
+                .orElseThrow(() -> new ResourceNotFoundException("Aluno não encontrado"));
+        Grupos grupo = gruposRepository.findById(grupoId)
+                .orElseThrow(() -> new ResourceNotFoundException("Grupo não encontrado"));
 
         GrupoAlunos grupoAluno = new GrupoAlunos();
         grupoAluno.setAluno(aluno);
         grupoAluno.setGrupo_alunos(grupo);
         grupoAluno.setRegistroAluno(registroAluno);
 
-        return grupoAlunosRepository.save(grupoAluno);
+        GrupoAlunos salvo = grupoAlunosRepository.save(grupoAluno);
+        return DTOMapper.toGrupoAlunosDTO(salvo);
     }
 
-    // Listar todos os alunos de um grupo
-    public List<GrupoAlunos> listarAlunosDoGrupo(Long grupoId) {
-        return grupoAlunosRepository.findByGrupo_Alunos_Id(grupoId);
+    // Buscar associação por ID
+    public GrupoAlunosDTO buscarGrupoAluno(Long id) {
+        GrupoAlunos grupoAluno = grupoAlunosRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Registro de grupo-aluno não encontrado"));
+        return DTOMapper.toGrupoAlunosDTO(grupoAluno);
     }
 
-    // Listar todos os grupos de um aluno
-    public List<GrupoAlunos> listarGruposDoAluno(Long alunoId) {
-        return grupoAlunosRepository.findByAluno_Id(alunoId);
+    // Listar todos os registros
+    public List<GrupoAlunosDTO> listarGrupoAlunos() {
+        return grupoAlunosRepository.findAll()
+                .stream()
+                .map(DTOMapper::toGrupoAlunosDTO)
+                .collect(Collectors.toList());
     }
 
-    // Remover aluno de um grupo
-    public void removerAlunoDoGrupo(Long alunoId, Long grupoId) {
-        GrupoAlunos grupoAluno = grupoAlunosRepository.findByAluno_IdAndGrupo_Alunos_Id(alunoId, grupoId)
-                .orElseThrow(() -> new RuntimeException("Aluno não está neste grupo"));
-        grupoAlunosRepository.delete(grupoAluno);
+    // Deletar associação
+    public void deletarGrupoAluno(Long id) {
+        try {
+            grupoAlunosRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Registro de grupo-aluno não encontrado");
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Não é possível deletar devido a restrições de integridade");
+        }
     }
-
-
 }

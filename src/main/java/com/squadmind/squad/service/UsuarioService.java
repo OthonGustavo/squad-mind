@@ -1,5 +1,7 @@
 package com.squadmind.squad.service;
 
+import com.squadmind.squad.dto.DTOMapper;
+import com.squadmind.squad.dto.UsuarioDTO;
 import com.squadmind.squad.entity.Turmas;
 import com.squadmind.squad.entity.Usuario;
 import com.squadmind.squad.exception.DatabaseException;
@@ -12,6 +14,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
@@ -26,25 +29,56 @@ public class UsuarioService {
     }
 
     // Criar usuário
-    public Usuario criarUsuario(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+    public UsuarioDTO criarUsuario(Usuario usuario) {
+        Usuario salvo = usuarioRepository.save(usuario);
+        return DTOMapper.toUsuarioDTO(salvo);
     }
 
     // Buscar usuário por ID
-    public Usuario buscarUsuario(Long id) {
-        return usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    public UsuarioDTO buscarUsuario(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+        return DTOMapper.toUsuarioDTO(usuario);
     }
 
     // Listar todos os usuários
-    public List<Usuario> listarUsuarios() {
-        return usuarioRepository.findAll();
+    public List<UsuarioDTO> listarUsuarios() {
+        return usuarioRepository.findAll()
+                .stream()
+                .map(DTOMapper::toUsuarioDTO)
+                .collect(Collectors.toList());
+    }
+
+    // Atualizar usuário
+    public UsuarioDTO atualizarUsuario(Long id, Usuario usuarioAtualizado) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
+        usuario.setNome(usuarioAtualizado.getNome());
+        usuario.setEmail(usuarioAtualizado.getEmail());
+        usuario.setSenha(usuarioAtualizado.getSenha());
+        usuario.setTipo(usuarioAtualizado.getTipo());
+        usuario.setRegistro(usuarioAtualizado.getRegistro());
+
+        Usuario salvo = usuarioRepository.save(usuario);
+        return DTOMapper.toUsuarioDTO(salvo);
+    }
+
+    // Deletar usuário
+    public void deletarUsuario(Long id) {
+        try {
+            usuarioRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Usuário não encontrado");
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Não é possível deletar o usuário devido a restrições de integridade");
+        }
     }
 
     // Criar turma para um professor
     public Turmas criarTurma(Long professorId, Turmas turma) {
         Usuario professor = usuarioRepository.findById(professorId)
-                .orElseThrow(() -> new RuntimeException("Professor não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Professor não encontrado"));
 
         turma.setProfessor(professor);
         turma.setCriadoEm();
@@ -55,29 +89,4 @@ public class UsuarioService {
     public List<Turmas> listarTurmasPorProfessor(Long professorId) {
         return turmasRepository.findByProfessorId(professorId);
     }
-
-    public void delete(Long id){
-        try {
-            usuarioRepository.deleteById(id);
-        }
-        catch (EmptyResultDataAccessException e){
-            throw new ResourceNotFoundException(id);
-        } catch (DataIntegrityViolationException e) {
-            throw new DatabaseException(e.getMessage());
-        }
-    }
-
-    public Usuario update(Long id, Usuario obj){
-        Usuario entity = usuarioRepository.getReferenceById(id);
-        updateData(entity, obj);
-        return usuarioRepository.save(entity);
-    }
-
-    private void updateData(Usuario entity, Usuario obj) {
-       entity.setNome(obj.getNome());
-       entity.setSenha(obj.getSenha());
-       entity.setTipo(obj.getTipo());
-       entity.setRegistro(obj.getRegistro());
-    }
-
 }

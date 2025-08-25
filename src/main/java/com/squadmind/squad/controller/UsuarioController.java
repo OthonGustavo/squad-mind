@@ -1,53 +1,54 @@
 package com.squadmind.squad.controller;
 
-
+import com.squadmind.squad.dto.UsuarioDTO;
+import com.squadmind.squad.entity.Turmas;
 import com.squadmind.squad.entity.Usuario;
 import com.squadmind.squad.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Usuarios")
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
 
     @Autowired
-    private UsuarioService service;
-
-    @GetMapping
-    public ResponseEntity<List<Usuario>> findAll(){
-        List<Usuario> lista = service.findAll();
-        return ResponseEntity.ok().body(lista);
-    }
-
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Usuario> findById(@PathVariable Long id){
-        Usuario obj = service.findById(id);
-        return ResponseEntity.ok().body(obj);
-    }
+    private UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<Usuario> insert(@RequestBody Usuario obj){
-        obj = service.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
-                buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).body(obj);
+    public UsuarioDTO criarUsuario(@RequestBody Usuario usuario) {
+        return usuarioService.criarUsuario(usuario);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
-        service.delete(id);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/{id}")
+    public UsuarioDTO buscarUsuario(@PathVariable Long id) {
+        return usuarioService.buscarUsuario(id);
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<Usuario> update(@PathVariable Long id, @RequestBody Usuario obj){
-        obj = service.update(id, obj);
-        return ResponseEntity.ok().body(obj);
+    @GetMapping
+    public List<UsuarioDTO> listarUsuarios() {
+        return usuarioService.listarUsuarios();
     }
 
+    @PutMapping("/{id}")
+    public UsuarioDTO atualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuarioAtualizado) {
+        return usuarioService.atualizarUsuario(id, usuarioAtualizado);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletarUsuario(@PathVariable Long id) {
+        usuarioService.deletarUsuario(id);
+    }
+
+    // Criar turma para um professor
+    @PostMapping("/{professorId}/turmas")
+    public Turmas criarTurma(@PathVariable Long professorId, @RequestBody Turmas turma) {
+        return usuarioService.criarTurma(professorId, turma);
+    }
+
+    @GetMapping("/{professorId}/turmas")
+    public List<Turmas> listarTurmasPorProfessor(@PathVariable Long professorId) {
+        return usuarioService.listarTurmasPorProfessor(professorId);
+    }
 }
