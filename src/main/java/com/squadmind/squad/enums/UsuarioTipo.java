@@ -5,8 +5,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum UsuarioTipo {
 
-    ALUNO("aluno"),
-    PROFESSOR("professor");
+    PARTICIPANTE("aluno"),
+    COORDENADOR("professor"),
+    ADMIN("admin");
 
     private final String code;
 
@@ -22,7 +23,7 @@ public enum UsuarioTipo {
     @JsonCreator
     public static UsuarioTipo fromValue(UsuarioTipo value) {
         for (UsuarioTipo tipo : values()) {
-            if (tipo.code.equals(value)) {
+            if (tipo.code.equalsIgnoreCase(value.getCode())) {
                 return tipo;
             }
         }

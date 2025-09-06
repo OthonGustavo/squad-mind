@@ -1,7 +1,7 @@
 package com.squadmind.squad.controller;
 
 import com.squadmind.squad.dto.UsuarioDTO;
-import com.squadmind.squad.entity.Turmas;
+import com.squadmind.squad.entity.Projeto;
 import com.squadmind.squad.entity.Usuario;
 import com.squadmind.squad.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +43,12 @@ public class UsuarioController {
 
     // Criar turma para um professor
     @PostMapping("/{professorId}/turmas")
-    public Turmas criarTurma(@PathVariable Long professorId, @RequestBody Turmas turma) {
+    public Projeto criarTurma(@PathVariable Long professorId, @RequestBody Projeto turma) {
         return usuarioService.criarTurma(professorId, turma);
     }
 
     @GetMapping("/{professorId}/turmas")
-    public List<Turmas> listarTurmasPorProfessor(@PathVariable Long professorId) {
+    public List<Projeto> listarTurmasPorProfessor(@PathVariable Long professorId) {
         return usuarioService.listarTurmasPorProfessor(professorId);
     }
 }

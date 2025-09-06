@@ -2,11 +2,10 @@ package com.squadmind.squad.service;
 
 import com.squadmind.squad.dto.DTOMapper;
 import com.squadmind.squad.dto.UsuarioDTO;
-import com.squadmind.squad.entity.Turmas;
+import com.squadmind.squad.entity.Projeto;
 import com.squadmind.squad.entity.Usuario;
 import com.squadmind.squad.exception.DatabaseException;
 import com.squadmind.squad.exception.ResourceNotFoundException;
-import com.squadmind.squad.repository.TurmasRepository;
 import com.squadmind.squad.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,12 +19,10 @@ import java.util.stream.Collectors;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-    private final TurmasRepository turmasRepository;
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository, TurmasRepository turmasRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository){
         this.usuarioRepository = usuarioRepository;
-        this.turmasRepository = turmasRepository;
     }
 
     // Criar usuário
@@ -73,20 +70,5 @@ public class UsuarioService {
         } catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Não é possível deletar o usuário devido a restrições de integridade");
         }
-    }
-
-    // Criar turma para um professor
-    public Turmas criarTurma(Long professorId, Turmas turma) {
-        Usuario professor = usuarioRepository.findById(professorId)
-                .orElseThrow(() -> new ResourceNotFoundException("Professor não encontrado"));
-
-        turma.setProfessor(professor);
-        turma.setCriadoEm();
-        return turmasRepository.save(turma);
-    }
-
-    // Listar turmas de um professor
-    public List<Turmas> listarTurmasPorProfessor(Long professorId) {
-        return turmasRepository.findByProfessorId(professorId);
     }
 }

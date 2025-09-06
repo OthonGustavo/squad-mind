@@ -1,7 +1,6 @@
 package com.squadmind.squad.config;
 
 
-import com.squadmind.squad.entity.GrupoAlunos;
 import com.squadmind.squad.entity.Usuario;
 import com.squadmind.squad.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;

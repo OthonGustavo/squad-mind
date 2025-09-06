@@ -8,32 +8,31 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Entity
-@Table(name = "grupo_alunos")
+@Table(name = "projeto_questionario")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
-public class GrupoAlunos implements Serializable {
+@Getter
+@Setter
+public class ProjetoQuestionario implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
     @ToString.Include
     private Long id;
 
-    @Getter @Setter
     @ManyToOne
-    @JoinColumn(name = "aluno_id")
-    private Usuario aluno;
+    @JoinColumn(name = "projeto_id")
+    private List<Projeto> projetos = new ArrayList<>();
 
-    @Getter @Setter
     @ManyToOne
-    @JoinColumn(name = "grupo_id")
-    private Grupos grupo_alunos;
+    @JoinColumn(name = "questionario_id")
+    private List<Questionario> questionarios = new ArrayList<>();
 
-    @Getter @Setter
-    @Column(name = "registro_aluno")
-    private String registroAluno;
-
+    public ProjetoQuestionario(Long id) {
+        this.id = id;
+    }
 }

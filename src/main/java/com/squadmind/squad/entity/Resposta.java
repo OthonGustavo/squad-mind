@@ -5,14 +5,12 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "respostas_disc")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
-public class Respostas implements Serializable {
+public class Resposta implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -34,7 +32,7 @@ public class Respostas implements Serializable {
     @Getter @Setter
     @ManyToOne
     @JoinColumn(name = "turma_id")
-    private Turmas turmasId;
+    private Projeto projetoId;
 
     @ToString.Include
     @Getter @Setter
@@ -61,7 +59,7 @@ public class Respostas implements Serializable {
     @Column(name = "perfil_dominante")
     private String perfilDominante;
 
-    public Respostas(Integer pontuacaoD, Integer pontuacaoI, Integer pontuacaoS, Integer pontuacaoC, String perfilDominante, String respostas_json, Long id) {
+    public Resposta(Integer pontuacaoD, Integer pontuacaoI, Integer pontuacaoS, Integer pontuacaoC, String perfilDominante, String respostas_json, Long id) {
         this.pontuacaoD = pontuacaoD;
         this.pontuacaoI = pontuacaoI;
         this.pontuacaoS = pontuacaoS;
