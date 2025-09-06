@@ -48,5 +48,13 @@ public class PerfilResultado {
     @CreationTimestamp
     private Instant data_validade;
 
+    public PerfilResultado(int id, String perfil_dominante, String perfil_tecnico, Instant data_calculo, Instant data_validade) {
+        this.id = id;
+        this.perfil_dominante = perfil_dominante;
+        this.perfil_tecnico = perfil_tecnico;
+        this.data_calculo = data_calculo;
+        this.data_validade = data_validade;
+    }
+
 }
 

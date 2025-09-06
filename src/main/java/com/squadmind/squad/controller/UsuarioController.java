@@ -15,40 +15,4 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
-
-    @PostMapping
-    public UsuarioDTO criarUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.criarUsuario(usuario);
-    }
-
-    @GetMapping("/{id}")
-    public UsuarioDTO buscarUsuario(@PathVariable Long id) {
-        return usuarioService.buscarUsuario(id);
-    }
-
-    @GetMapping
-    public List<UsuarioDTO> listarUsuarios() {
-        return usuarioService.listarUsuarios();
-    }
-
-    @PutMapping("/{id}")
-    public UsuarioDTO atualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuarioAtualizado) {
-        return usuarioService.atualizarUsuario(id, usuarioAtualizado);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deletarUsuario(@PathVariable Long id) {
-        usuarioService.deletarUsuario(id);
-    }
-
-    // Criar turma para um professor
-    @PostMapping("/{professorId}/turmas")
-    public Projeto criarTurma(@PathVariable Long professorId, @RequestBody Projeto turma) {
-        return usuarioService.criarTurma(professorId, turma);
-    }
-
-    @GetMapping("/{professorId}/turmas")
-    public List<Projeto> listarTurmasPorProfessor(@PathVariable Long professorId) {
-        return usuarioService.listarTurmasPorProfessor(professorId);
-    }
 }
