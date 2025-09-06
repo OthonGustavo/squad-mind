@@ -16,35 +16,40 @@ import java.util.List;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Getter @Setter
+@ToString
 public class Grupo implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ToString.Include
     private Long id;
 
-    @ToString.Include
+    private String nome_grupo;
+
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "projeto_id")
-    @JsonIgnore
     private Projeto projeto;
 
-    @ToString.Include
     @Column(name = "numero_grupo")
     private Integer numero_grupo;
 
     @ToString.Include
     private String criterio_formacao;
 
-    @ToString.Include
     @CreationTimestamp
     private Instant criado_em;
 
-    public Grupo(Long id, Integer numero_grupo) {
+    @OneToMany(mappedBy = "grupo_id")
+    private List<GrupoMembros> grupoMembros = new ArrayList<>();
+
+    public Grupo(Long id, String nome_grupo, Integer numero_grupo, String criterio_formacao, Instant criado_em) {
         this.id = id;
+        this.nome_grupo = nome_grupo;
         this.numero_grupo = numero_grupo;
+        this.criterio_formacao = criterio_formacao;
+        this.criado_em = criado_em;
     }
 
 }

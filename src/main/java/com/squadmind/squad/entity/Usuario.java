@@ -8,6 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
@@ -37,8 +39,29 @@ public class Usuario implements Serializable {
     @CreationTimestamp
     @Column(name = "criado_em")
     private Instant criadoEm;
+
     @CreationTimestamp
     @Column(name = "alterado_em")
     private Instant alteradoEm;
+
+    @OneToMany(mappedBy = "mediador_id")
+    @ToString.Exclude
+    private List<Projeto> projetos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "usuario_id")
+    @ToString.Exclude
+    private List<Participante> participantes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "usuario_id")
+    @ToString.Exclude
+    private List<GrupoMembros> grupoMembros = new ArrayList<>();
+
+    @OneToMany(mappedBy = "usuario_id")
+    @ToString.Exclude
+    private List<PerfilResultado> perfilResultados = new ArrayList<>();
+
+    @OneToMany(mappedBy = "usuario_id")
+    @ToString.Exclude
+    private List<Resposta> respostas = new ArrayList<>();
 
 }

@@ -40,5 +40,4 @@ public class Participante implements Serializable {
         this.id = id;
     }
 
-
 }

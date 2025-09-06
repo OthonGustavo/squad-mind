@@ -2,71 +2,48 @@ package com.squadmind.squad.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.List;
 
 @Entity
-@Table(name = "respostas_disc")
+@Table(name = "respostas")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
+@Getter @Setter
+@ToString
 public class Resposta implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @ToString.Include
     private Long id;
 
-    @Getter @Setter
-    @Column(name = "respostas_json")
-    private String respostas_json;
+    private Integer valor;
 
-    @Getter @Setter
+    private String respostas_texto;
+
+    @CreationTimestamp
+    private Instant data_resposta;
+
     @ManyToOne
-    @JoinColumn(name = "aluno_id")
-    private Usuario alunoId;
+    @JoinColumn(name="coordenador_id")
+    private Usuario usuario_id;
 
-    @Getter @Setter
     @ManyToOne
-    @JoinColumn(name = "turma_id")
-    private Projeto projetoId;
+    @JoinColumn(name = "projeto_id")
+    private Projeto projeto_id;
 
-    @ToString.Include
-    @Getter @Setter
-    @Column(name = "pontuacao_d")
-    private Integer pontuacaoD;
+    @ManyToOne
+    @JoinColumn(name = "pergunta_id")
+    private Pergunta pergunta_id;
 
-    @ToString.Include
-    @Getter @Setter
-    @Column(name = "pontuacao_i")
-    private Integer pontuacaoI;
-
-    @ToString.Include
-    @Getter @Setter
-    @Column(name = "pontuacao_s")
-    private Integer pontuacaoS;
-
-    @ToString.Include
-    @Getter @Setter
-    @Column(name = "pontuacao_c")
-    private Integer pontuacaoC;
-
-    @ToString.Include
-    @Getter @Setter
-    @Column(name = "perfil_dominante")
-    private String perfilDominante;
-
-    public Resposta(Integer pontuacaoD, Integer pontuacaoI, Integer pontuacaoS, Integer pontuacaoC, String perfilDominante, String respostas_json, Long id) {
-        this.pontuacaoD = pontuacaoD;
-        this.pontuacaoI = pontuacaoI;
-        this.pontuacaoS = pontuacaoS;
-        this.pontuacaoC = pontuacaoC;
-        this.perfilDominante = perfilDominante;
-        this.respostas_json = respostas_json;
-        this.id = id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "alternativa_id")
+    private Alternativa alternativa_id;
 
 }

@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "pergunta")
@@ -23,6 +25,15 @@ public class Alternativa implements Serializable {
 
     @Column(name = "texto")
     private String texto;
-    @Column(name = "texto")
+    @Column(name = "valor")
     private Integer valor;
+
+    @ManyToOne
+    @JoinColumn(name = "pergunta_id")
+    private Pergunta pergunta_id;
+
+    @OneToMany(mappedBy = "alternativa_id")
+    @ToString.Exclude
+    private List<Resposta> respostas = new ArrayList<>();
+
 }

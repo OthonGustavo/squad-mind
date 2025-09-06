@@ -27,4 +27,9 @@ public class GrupoMembros {
     @Column(name = "lider_grupo")
     private Boolean lider_grupo;
 
+    public GrupoMembros(int id, Boolean lider_grupo) {
+        this.id = id;
+        this.lider_grupo = lider_grupo;
+    }
+
 }

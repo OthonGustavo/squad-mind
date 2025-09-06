@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "pergunta")
@@ -26,7 +28,6 @@ public class Pergunta implements Serializable {
     private String tipo;
 
     @ManyToOne
-    @ToString.Exclude
     @JoinColumn(name = "tag_id")
     private Tag tag_id;
 
@@ -34,4 +35,13 @@ public class Pergunta implements Serializable {
     @JoinColumn(name = "questionario_id")
     private Questionario questionario_id;
 
+    @OneToMany(mappedBy = "pergunta_id")
+    @ToString.Exclude
+    private List<Resposta> respostas = new ArrayList<>();
+
+    public Pergunta(int id, String descricao, String tipo) {
+        this.id = id;
+        this.descricao = descricao;
+        this.tipo = tipo;
+    }
 }
