@@ -31,7 +31,7 @@ public class Questionario implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "projeto_id")
-    private List<Projeto> projetos = new ArrayList<>();
+    private Projeto projeto;
 
     @OneToMany(mappedBy = "questionario_id")
     @ToString.Exclude

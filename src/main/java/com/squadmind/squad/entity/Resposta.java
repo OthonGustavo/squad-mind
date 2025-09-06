@@ -46,4 +46,11 @@ public class Resposta implements Serializable {
     @JoinColumn(name = "alternativa_id")
     private Alternativa alternativa_id;
 
+    public Resposta(Long id, Integer valor, String respostas_texto, Instant data_resposta) {
+        this.id = id;
+        this.valor = valor;
+        this.respostas_texto = respostas_texto;
+        this.data_resposta = data_resposta;
+    }
+
 }
