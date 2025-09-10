@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "grupos")
+@Table(name = "TB_GRUPO")
 @EqualsAndHashCode
 @NoArgsConstructor
 @Getter @Setter

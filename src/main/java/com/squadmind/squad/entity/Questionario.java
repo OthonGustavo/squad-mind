@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "questionario")
+@Table(name = "TB_QUESTIONARIO")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @Getter
@@ -44,6 +44,10 @@ public class Questionario implements Serializable {
     @OneToMany(mappedBy = "questionario_id")
     @ToString.Exclude
     private List<Pergunta> perguntas = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "questionario_id")
+    @ToString.Exclude
+    private List<ProjetoQuestionario> projetoQuestionarios = new ArrayList<>();
 
     @CreationTimestamp
     private Instant criado_em;

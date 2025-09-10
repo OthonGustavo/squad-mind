@@ -5,15 +5,17 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
+
 
 @Entity
-@Table(name = "TB_TAG")
+@Table(name = "TB_TIPO")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-public class Tag implements Serializable {
+public class Tipo implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -21,16 +23,6 @@ public class Tag implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ToString.Include
-    @Column(name = "nome_tag")
-    private String nome_tag;
-
-    @ToString.Include
-    @Column(name = "sigla")
-    private String sigla;
-
-    @ManyToOne
-    @JoinColumn(name = "questionario_id")
-    private Questionario questionario;
+    private String nome_tipo;
 
 }

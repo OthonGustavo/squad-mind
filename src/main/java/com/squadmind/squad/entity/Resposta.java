@@ -10,7 +10,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Entity
-@Table(name = "respostas")
+@Table(name = "TB_RESPOSTA")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @Getter @Setter

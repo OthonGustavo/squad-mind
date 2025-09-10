@@ -7,7 +7,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "grupo_membros")
+@Table(name = "TB_GRUPO_MEMBROS")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @Getter @Setter

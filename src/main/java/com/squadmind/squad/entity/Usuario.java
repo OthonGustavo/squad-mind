@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "TB_USUARIO")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @Getter

@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.time.Instant;
 
 @Entity
-@Table(name = "participante")
+@Table(name = "TB_PARTICIPANTE")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @Getter @Setter

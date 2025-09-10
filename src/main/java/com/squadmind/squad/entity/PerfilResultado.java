@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.util.Map;
 
 @Entity
-@Table(name="perfil_resultado")
+@Table(name="TB_PERFIL_RESULTADO")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @Getter

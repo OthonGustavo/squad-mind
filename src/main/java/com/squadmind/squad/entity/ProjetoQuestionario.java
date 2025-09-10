@@ -24,13 +24,13 @@ public class ProjetoQuestionario implements Serializable {
     @ToString.Include
     private Long id;
 
-    @ManyToOne
+    @ManyToMany
     @JoinColumn(name = "projeto_id")
-    private List<Projeto> projetos = new ArrayList<>();
+    private List<Projeto> projeto_id = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToMany
     @JoinColumn(name = "questionario_id")
-    private List<Questionario> questionarios = new ArrayList<>();
+    private List<Questionario> questionario_id = new ArrayList<>();
 
     public ProjetoQuestionario(Long id) {
         this.id = id;

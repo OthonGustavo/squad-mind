@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "pergunta")
+@Table(name = "TB_PERGUNTA")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @Getter

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "projeto")
+@Table(name = "TB_PROJETO")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @Getter @Setter
@@ -54,5 +54,9 @@ public class Projeto implements Serializable {
     @OneToMany(mappedBy = "projeto_id")
     @ToString.Exclude
     private List<Resposta> respostas = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "projeto_id")
+    @ToString.Exclude
+    private List<ProjetoQuestionario> projetoQuestionarios = new ArrayList<>();
 
 }
