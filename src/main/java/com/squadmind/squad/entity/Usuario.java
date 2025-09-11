@@ -1,5 +1,6 @@
 package com.squadmind.squad.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.squadmind.squad.enums.UsuarioTipo;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,15 +26,10 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String nome;
     private String email;
     private String senha;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo")
-    private UsuarioTipo tipo;
-
-    @Column(name = "registro")
     private String registro;
 
     @CreationTimestamp
@@ -44,24 +40,33 @@ public class Usuario implements Serializable {
     @Column(name = "alterado_em")
     private Instant alteradoEm;
 
-    @OneToMany(mappedBy = "mediador_id")
+    @OneToMany(mappedBy = "coordenador")
     @ToString.Exclude
     private List<Projeto> projetos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "usuario_id")
+    @OneToMany(mappedBy = "usuario")
     @ToString.Exclude
     private List<Participante> participantes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "usuario_id")
+    @OneToMany(mappedBy = "usuario")
     @ToString.Exclude
     private List<GrupoMembros> grupoMembros = new ArrayList<>();
 
-    @OneToMany(mappedBy = "usuario_id")
+    @OneToMany(mappedBy = "usuario")
     @ToString.Exclude
     private List<PerfilResultado> perfilResultados = new ArrayList<>();
 
-    @OneToMany(mappedBy = "usuario_id")
+    @OneToMany(mappedBy = "usuario")
     @ToString.Exclude
     private List<Resposta> respostas = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "usuario_tipo",  // nome da tabela de junção
+            joinColumns = @JoinColumn(name = "usuario_id"), // FK para Usuario
+            inverseJoinColumns = @JoinColumn(name = "tipo_id") // FK para Tipo
+    )
+    @JsonIgnore
+    private List<Tipo> tipos = new ArrayList<>();
 
 }

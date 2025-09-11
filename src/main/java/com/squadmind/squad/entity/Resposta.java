@@ -7,13 +7,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.List;
 
 @Entity
 @Table(name = "TB_RESPOSTA")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @ToString
 public class Resposta implements Serializable {
     @Serial
@@ -25,32 +25,33 @@ public class Resposta implements Serializable {
 
     private Integer valor;
 
-    private String respostas_texto;
+    @Column(name = "resposta_texto")
+    private String respostaTexto;
 
     @CreationTimestamp
-    private Instant data_resposta;
+    @Column(name = "data_resposta")
+    private Instant dataResposta;
 
     @ManyToOne
-    @JoinColumn(name="coordenador_id")
-    private Usuario usuario_id;
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "projeto_id")
-    private Projeto projeto_id;
+    private Projeto projeto;
 
     @ManyToOne
     @JoinColumn(name = "pergunta_id")
-    private Pergunta pergunta_id;
+    private Pergunta pergunta;
 
     @ManyToOne
     @JoinColumn(name = "alternativa_id")
-    private Alternativa alternativa_id;
+    private Alternativa alternativa;
 
-    public Resposta(Long id, Integer valor, String respostas_texto, Instant data_resposta) {
+    public Resposta(Long id, Integer valor, String respostaTexto, Instant dataResposta) {
         this.id = id;
         this.valor = valor;
-        this.respostas_texto = respostas_texto;
-        this.data_resposta = data_resposta;
+        this.respostaTexto = respostaTexto;
+        this.dataResposta = dataResposta;
     }
-
 }

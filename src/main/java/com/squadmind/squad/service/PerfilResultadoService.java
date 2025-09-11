@@ -37,8 +37,8 @@ public class PerfilResultadoService {
                 .orElseThrow(() -> new RuntimeException("Questionário não encontrado"));
 
         resultado.setUsuario(usuario);
-        resultado.setProjeto_id(projeto);
-        resultado.setQuestionario_id(questionario);
+        resultado.setProjeto(projeto);
+        resultado.setQuestionario(questionario);
 
         return perfilResultadoRepository.save(resultado);
     }
@@ -57,11 +57,11 @@ public class PerfilResultadoService {
     }
 
     public List<PerfilResultado> listarPorProjeto(Long projetoId) {
-        return perfilResultadoRepository.findByProjeto_id_Id(projetoId);
+        return perfilResultadoRepository.findByProjeto_Id(projetoId);
     }
 
     public List<PerfilResultado> listarPorQuestionario(Long questionarioId) {
-        return perfilResultadoRepository.findByQuestionario_id_Id(questionarioId);
+        return perfilResultadoRepository.findByQuestionario_Id(questionarioId);
     }
 
     public void removerResultado(Long id) {

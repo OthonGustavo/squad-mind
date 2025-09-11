@@ -1,10 +1,12 @@
 package com.squadmind.squad.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,5 +26,9 @@ public class Tipo implements Serializable {
     private int id;
 
     private String nome_tipo;
+
+    @ManyToMany(mappedBy = "tipos")
+    @JsonIgnore
+    private List<Usuario> usuarios = new ArrayList<>();
 
 }

@@ -23,18 +23,18 @@ public class PerguntaService {
         Tag tag = tagRepository.findById(tagId)
                 .orElseThrow(() -> new RuntimeException("Tag não encontrada"));
 
-        pergunta.setQuestionario_id(questionario);
-        pergunta.setTag_id(tag);
+        pergunta.setQuestionario(questionario);
+        pergunta.setTag(tag);
 
         return perguntaRepository.save(pergunta);
     }
 
     public List<Pergunta> listarPerguntasPorQuestionario(Long questionarioId) {
-        return perguntaRepository.findByQuestionario_id_Id(questionarioId);
+        return perguntaRepository.findByQuestionario_Id(questionarioId);
     }
 
     public List<Pergunta> listarPerguntasPorTag(Long tagId) {
-        return perguntaRepository.findByTag_id_Id(tagId);
+        return perguntaRepository.findByTag_Id(tagId);
     }
 
     public Pergunta buscarPorId(Long id) {

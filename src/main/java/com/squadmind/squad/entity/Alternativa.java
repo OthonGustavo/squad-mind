@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "TB_PERGUNTA")
+@Table(name = "TB_ALTERNATIVA")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @Getter
@@ -25,15 +25,15 @@ public class Alternativa implements Serializable {
 
     @Column(name = "texto")
     private String texto;
+
     @Column(name = "valor")
     private Integer valor;
 
     @ManyToOne
     @JoinColumn(name = "pergunta_id")
-    private Pergunta pergunta_id;
+    private Pergunta pergunta;
 
-    @OneToMany(mappedBy = "alternativa_id")
+    @OneToMany(mappedBy = "alternativa")
     @ToString.Exclude
     private List<Resposta> respostas = new ArrayList<>();
-
 }

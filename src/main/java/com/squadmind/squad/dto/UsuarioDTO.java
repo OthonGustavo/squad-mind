@@ -1,5 +1,6 @@
 package com.squadmind.squad.dto;
 
+import com.squadmind.squad.entity.Tipo;
 import com.squadmind.squad.entity.Usuario;
 import com.squadmind.squad.enums.UsuarioTipo;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.Setter;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,10 +21,11 @@ public class UsuarioDTO {
     private int id;
     private String nome;
     private String email;
-    private UsuarioTipo tipo;
+    private List<Tipo> tipo;
     private String registro;
     private String criadoEm;
     private String atualizado_em;
+    private List<TipoDTO> tipos;
 
     public UsuarioDTO(Usuario usuario) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
@@ -31,7 +34,7 @@ public class UsuarioDTO {
         this.id = usuario.getId();
         this.nome = usuario.getNome();
         this.email = usuario.getEmail();
-        this.tipo = usuario.getTipo();
+        this.tipo = usuario.getTipos();
         this.registro = usuario.getRegistro();
         this.criadoEm = formatter.format(usuario.getCriadoEm());
         this.atualizado_em = formatter.format(usuario.getAlteradoEm());

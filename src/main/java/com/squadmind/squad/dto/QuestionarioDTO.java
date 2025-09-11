@@ -25,12 +25,12 @@ public class QuestionarioDTO {
         this.id = questionario.getId();
         this.nome = questionario.getNome();
         this.tipo = questionario.getTipo();
-        if (questionario.getMediador_id() != null) {
-            this.mediador = new UsuarioDTO(questionario.getMediador_id());
+        if (questionario.getMediador() != null) {
+            this.mediador = new UsuarioDTO(questionario.getMediador());
         }
         if(questionario.getProjeto() != null) {
             this.projeto = new ProjetoDTO(questionario.getProjeto());
         }
-        this.criadoEm = questionario.getCriado_em();
+        this.criadoEm = questionario.getCriadoEm();
     }
 }

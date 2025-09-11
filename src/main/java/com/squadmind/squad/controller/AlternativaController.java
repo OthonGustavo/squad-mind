@@ -21,12 +21,6 @@ public class AlternativaController {
         return ResponseEntity.ok(novaAlternativa);
     }
 
-    @GetMapping("/pergunta/{perguntaId}")
-    public ResponseEntity<List<Alternativa>> listarAlternativasPorPergunta(@PathVariable Long perguntaId) {
-        List<Alternativa> alternativas = alternativaService.listarAlternativasPorPergunta(perguntaId);
-        return ResponseEntity.ok(alternativas);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Alternativa> buscarPorId(@PathVariable Long id) {
         Alternativa alternativa = alternativaService.buscarPorId(id);

@@ -34,28 +34,6 @@ public class TestConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
-        // Limpa os dados do banco de teste antes de inserir novos
-        usuarioRepository.deleteAll();
-
-        // 1. Crie o objeto primeiro
-        Usuario u1 = new Usuario();
-
-        // 2. Use os setters para definir os valores
-        u1.setNome("Maria Brown");
-        u1.setEmail("maria@gmail.com");
-        u1.setSenha("123456");
-        u1.setTipo(UsuarioTipo.COORDENADOR);
-        u1.setRegistro("PROF123");
-
-        Usuario u2 = new Usuario();
-        u2.setNome("Alex Green");
-        u2.setEmail("alex@gmail.com");
-        u2.setSenha("123456");
-        u2.setTipo(UsuarioTipo.PARTICIPANTE);
-        u2.setRegistro("ALUNO456");
-
-        // 3. Salve o objeto usando a variável do repositório
-        usuarioRepository.saveAll(Arrays.asList(u1, u2));
+        System.out.println(usuarioRepository.findAll());
     }
 }

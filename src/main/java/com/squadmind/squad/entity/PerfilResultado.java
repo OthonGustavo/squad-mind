@@ -20,9 +20,11 @@ public class PerfilResultado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String perfil_dominante;
+    @Column(name = "perfil_dominante")
+    private String perfilDominante;
 
-    private String perfil_tecnico;
+    @Column(name = "perfil_tecnico")
+    private String perfilTecnico;
 
     @ManyToOne
     @JoinColumn(name="usuario_id")
@@ -32,29 +34,30 @@ public class PerfilResultado {
     @ManyToOne
     @JoinColumn(name="projeto_id")
     @ToString.Exclude
-    private Projeto projeto_id;
+    private Projeto projeto;
 
     @ManyToOne
     @JoinColumn(name = "questionario_id")
     @ToString.Exclude
-    private Questionario questionario_id;
+    private Questionario questionario;
 
     @Convert(converter = JsonConverter.class)
+    @Column(name = "resultado_json")
     private Map<String, String> resultadoJson;
 
     @CreationTimestamp
-    private Instant data_calculo;
+    @Column(name = "data_calculo")
+    private Instant dataCalculo;
 
     @CreationTimestamp
-    private Instant data_validade;
+    @Column(name = "data_validade")
+    private Instant dataValidade;
 
-    public PerfilResultado(int id, String perfil_dominante, String perfil_tecnico, Instant data_calculo, Instant data_validade) {
+    public PerfilResultado(int id, String perfilDominante, String perfilTecnico, Instant dataCalculo, Instant dataValidade) {
         this.id = id;
-        this.perfil_dominante = perfil_dominante;
-        this.perfil_tecnico = perfil_tecnico;
-        this.data_calculo = data_calculo;
-        this.data_validade = data_validade;
+        this.perfilDominante = perfilDominante;
+        this.perfilTecnico = perfilTecnico;
+        this.dataCalculo = dataCalculo;
+        this.dataValidade = dataValidade;
     }
-
 }
-

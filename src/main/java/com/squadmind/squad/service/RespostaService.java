@@ -39,14 +39,14 @@ public class RespostaService {
         Pergunta pergunta = perguntaRepository.findById(perguntaId)
                 .orElseThrow(() -> new RuntimeException("Pergunta não encontrada"));
 
-        resposta.setUsuario_id(usuario);
-        resposta.setProjeto_id(projeto);
-        resposta.setPergunta_id(pergunta);
+        resposta.setUsuario(usuario);
+        resposta.setProjeto(projeto);
+        resposta.setPergunta(pergunta);
 
         if (alternativaId != null) {
             Alternativa alternativa = alternativaRepository.findById(alternativaId)
                     .orElseThrow(() -> new RuntimeException("Alternativa não encontrada"));
-            resposta.setAlternativa_id(alternativa);
+            resposta.setAlternativa(alternativa);
         }
 
         return respostaRepository.save(resposta);
@@ -62,19 +62,19 @@ public class RespostaService {
     }
 
     public List<Resposta> listarPorUsuario(Long usuarioId) {
-        return respostaRepository.findByUsuario_id_Id(usuarioId);
+        return respostaRepository.findByUsuario_Id(usuarioId);
     }
 
     public List<Resposta> listarPorProjeto(Long projetoId) {
-        return respostaRepository.findByProjeto_id_Id(projetoId);
+        return respostaRepository.findByProjeto_Id(projetoId);
     }
 
     public List<Resposta> listarPorPergunta(Long perguntaId) {
-        return respostaRepository.findByPergunta_id_Id(perguntaId);
+        return respostaRepository.findByPergunta_Id(perguntaId);
     }
 
     public List<Resposta> listarPorAlternativa(Long alternativaId) {
-        return respostaRepository.findByAlternativa_id_Id(alternativaId);
+        return respostaRepository.findByAlternativa_Id(alternativaId);
     }
 
     public void remover(Long id) {

@@ -22,42 +22,29 @@ public class Questionario implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String nome;
     private String tipo;
 
+    private Instant criado_em;
+
     @ManyToOne
-    @JoinColumn(name="mediador_id")
-    private Usuario mediador_id;
+    @JoinColumn(name = "mediador_id")
+    private Usuario mediador;
 
     @ManyToOne
     @JoinColumn(name = "projeto_id")
     private Projeto projeto;
 
-    @OneToMany(mappedBy = "questionario_id")
-    @ToString.Exclude
+    @OneToMany(mappedBy = "questionario")
     private List<PerfilResultado> perfilResultados = new ArrayList<>();
 
-    @OneToMany(mappedBy = "questionario_id")
-    @ToString.Exclude
+    @OneToMany(mappedBy = "questionario")
     private List<Tag> tags = new ArrayList<>();
 
-    @OneToMany(mappedBy = "questionario_id")
-    @ToString.Exclude
+    @OneToMany(mappedBy = "questionario")
     private List<Pergunta> perguntas = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "questionario_id")
-    @ToString.Exclude
-    private List<ProjetoQuestionario> projetoQuestionarios = new ArrayList<>();
-
     @CreationTimestamp
-    private Instant criado_em;
-
-    public Questionario(int id, String nome, String tipo, Instant criado_em) {
-        this.id = id;
-        this.nome = nome;
-        this.tipo = tipo;
-        this.criado_em = criado_em;
-    }
-
+    private Instant criadoEm;
 }
-

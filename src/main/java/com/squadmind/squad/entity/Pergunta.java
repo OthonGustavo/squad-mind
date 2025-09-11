@@ -29,15 +29,19 @@ public class Pergunta implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "tag_id")
-    private Tag tag_id;
+    private Tag tag;
 
     @ManyToOne
     @JoinColumn(name = "questionario_id")
-    private Questionario questionario_id;
+    private Questionario questionario;
 
-    @OneToMany(mappedBy = "pergunta_id")
+    @OneToMany(mappedBy = "pergunta")
     @ToString.Exclude
     private List<Resposta> respostas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "pergunta")
+    @ToString.Exclude
+    private List<Alternativa> alternativas = new ArrayList<>();
 
     public Pergunta(int id, String descricao, String tipo) {
         this.id = id;

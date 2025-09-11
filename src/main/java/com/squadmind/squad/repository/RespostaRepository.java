@@ -7,12 +7,9 @@ import java.util.List;
 
 public interface RespostaRepository extends JpaRepository<Resposta,Long> {
 
-    List<Resposta> findByUsuario_id_Id(Long usuarioId);
-
-    List<Resposta> findByProjeto_id_Id(Long projetoId);
-
-    List<Resposta> findByPergunta_id_Id(Long perguntaId);
-
-    List<Resposta> findByAlternativa_id_Id(Long alternativaId);
+    List<Resposta> findByUsuario_Id(Long usuarioId);
+    List<Resposta> findByProjeto_Id(Long projetoId);
+    List<Resposta> findByPergunta_Id(Long perguntaId);
+    List<Resposta> findByAlternativa_Id(Long alternativaId);
 
 }

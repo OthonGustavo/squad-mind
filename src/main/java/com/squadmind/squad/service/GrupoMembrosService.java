@@ -31,9 +31,9 @@ public class GrupoMembrosService {
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         GrupoMembros membro = new GrupoMembros();
-        membro.setGrupo_id(grupo);
-        membro.setUsuario_id(usuario);
-        membro.setLider_grupo(lider);
+        membro.setGrupo(grupo);
+        membro.setUsuario(usuario);
+        membro.setLiderGrupo(lider);
 
         return grupoMembrosRepository.save(membro);
     }

@@ -25,8 +25,8 @@ public class ParticipanteService {
                 .orElseThrow(() -> new RuntimeException("Projeto não encontrado"));
 
         Participante participante = new Participante();
-        participante.setUsuario_id(usuario);
-        participante.setProjeto_id(projeto);
+        participante.setUsuario(usuario);
+        participante.setProjeto(projeto);
 
         return participanteRepository.save(participante);
     }

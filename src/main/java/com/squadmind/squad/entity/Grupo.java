@@ -1,6 +1,5 @@
 package com.squadmind.squad.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,9 +12,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "TB_GRUPO")
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @ToString
 public class Grupo implements Serializable {
     @Serial
@@ -25,31 +25,19 @@ public class Grupo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome_grupo;
+    private String nomeGrupo;
 
-    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "projeto_id")
     private Projeto projeto;
 
-    @Column(name = "numero_grupo")
-    private Integer numero_grupo;
+    private Integer numeroGrupo;
 
-    @ToString.Include
-    private String criterio_formacao;
+    private String criterioFormacao;
 
     @CreationTimestamp
-    private Instant criado_em;
+    private Instant criadoEm;
 
-    @OneToMany(mappedBy = "grupo_id")
+    @OneToMany(mappedBy = "grupo")
     private List<GrupoMembros> grupoMembros = new ArrayList<>();
-
-    public Grupo(Long id, String nome_grupo, Integer numero_grupo, String criterio_formacao, Instant criado_em) {
-        this.id = id;
-        this.nome_grupo = nome_grupo;
-        this.numero_grupo = numero_grupo;
-        this.criterio_formacao = criterio_formacao;
-        this.criado_em = criado_em;
-    }
-
 }

@@ -25,11 +25,9 @@ public class ProjetoQuestionario implements Serializable {
     private Long id;
 
     @ManyToMany
-    @JoinColumn(name = "projeto_id")
     private List<Projeto> projeto_id = new ArrayList<>();
 
     @ManyToMany
-    @JoinColumn(name = "questionario_id")
     private List<Questionario> questionario_id = new ArrayList<>();
 
     public ProjetoQuestionario(Long id) {

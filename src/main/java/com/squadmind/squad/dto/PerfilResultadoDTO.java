@@ -25,16 +25,16 @@ public class PerfilResultadoDTO {
 
     public PerfilResultadoDTO(PerfilResultado perfilResultado) {
         this.id = perfilResultado.getId();
-        this.perfilDominante = perfilResultado.getPerfil_dominante();
-        this.perfilTecnico = perfilResultado.getPerfil_tecnico();
+        this.perfilDominante = perfilResultado.getPerfilDominante();
+        this.perfilTecnico = perfilResultado.getPerfilTecnico();
         this.resultadoJson = perfilResultado.getResultadoJson();
-        this.dataCalculo = perfilResultado.getData_calculo();
+        this.dataCalculo = perfilResultado.getDataCalculo();
 
         if (perfilResultado.getUsuario() != null) {
             this.usuario = new UsuarioDTO(perfilResultado.getUsuario());
         }
-        if (perfilResultado.getProjeto_id() != null) {
-            this.projeto = new ProjetoDTO(perfilResultado.getProjeto_id());
+        if (perfilResultado.getProjeto() != null) {
+            this.projeto = new ProjetoDTO(perfilResultado.getProjeto());
         }
     }
 }

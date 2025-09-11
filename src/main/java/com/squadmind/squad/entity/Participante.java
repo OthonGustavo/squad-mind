@@ -12,7 +12,8 @@ import java.time.Instant;
 @Table(name = "TB_PARTICIPANTE")
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @ToString
 public class Participante implements Serializable {
     @Serial
@@ -24,20 +25,18 @@ public class Participante implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "projeto_id")
-    @ToString.Exclude
-    private Projeto projeto_id;
+    private Projeto projeto;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    @ToString.Exclude
-    private Usuario usuario_id;
+    private Usuario usuario;
 
     @CreationTimestamp
-    private Instant data_entrada;
+    @Column(name = "data_entrada")
+    private Instant dataEntrada;
 
-    public Participante(Instant data_entrada, Long id) {
-        this.data_entrada = data_entrada;
+    public Participante(Instant dataEntrada, Long id) {
+        this.dataEntrada = dataEntrada;
         this.id = id;
     }
-
 }

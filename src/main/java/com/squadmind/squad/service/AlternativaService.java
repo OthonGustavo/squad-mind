@@ -23,12 +23,8 @@ public class AlternativaService {
         Pergunta pergunta = perguntaRepository.findById(perguntaId)
                 .orElseThrow(() -> new RuntimeException("Pergunta não encontrada"));
 
-        alternativa.setPergunta_id(pergunta);
+        alternativa.setPergunta(pergunta);
         return alternativaRepository.save(alternativa);
-    }
-
-    public List<Alternativa> listarAlternativasPorPergunta(Long perguntaId) {
-        return alternativaRepository.findByPergunta_id_Id(perguntaId);
     }
 
     public Alternativa buscarPorId(Long id) {

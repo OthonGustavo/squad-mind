@@ -21,16 +21,13 @@ public class Tag implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ToString.Include
     @Column(name = "nome_tag")
-    private String nome_tag;
+    private String nomeTag;
 
-    @ToString.Include
     @Column(name = "sigla")
     private String sigla;
 
     @ManyToOne
     @JoinColumn(name = "questionario_id")
     private Questionario questionario;
-
 }

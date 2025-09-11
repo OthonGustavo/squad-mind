@@ -22,9 +22,9 @@ public class GrupoDTO {
 
     public GrupoDTO(Grupo grupo) {
         this.id = grupo.getId();
-        this.nomeGrupo = grupo.getNome_grupo();
-        this.numeroGrupo = grupo.getNumero_grupo();
-        this.criterioFormacao = grupo.getCriterio_formacao();
-        this.criadoEm = grupo.getCriado_em();
+        this.nomeGrupo = grupo.getNomeGrupo();
+        this.numeroGrupo = grupo.getNumeroGrupo();
+        this.criterioFormacao = grupo.getCriterioFormacao();
+        this.criadoEm = grupo.getCriadoEm();
     }
 }
