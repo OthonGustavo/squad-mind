@@ -21,7 +21,7 @@ public class Pergunta implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String descricao;
 
@@ -43,7 +43,7 @@ public class Pergunta implements Serializable {
     @ToString.Exclude
     private List<Alternativa> alternativas = new ArrayList<>();
 
-    public Pergunta(int id, String descricao, String tipo) {
+    public Pergunta(Long id, String descricao, String tipo) {
         this.id = id;
         this.descricao = descricao;
         this.tipo = tipo;

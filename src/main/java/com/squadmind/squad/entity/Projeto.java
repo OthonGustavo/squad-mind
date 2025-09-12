@@ -20,7 +20,7 @@ public class Projeto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String nome;
 
@@ -51,4 +51,8 @@ public class Projeto implements Serializable {
 
     @OneToMany(mappedBy = "projeto")
     private List<Resposta> respostas = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "projeto")
+    private List<ProjetoQuestionario> projetoQuestionario = new ArrayList<>();
+
 }

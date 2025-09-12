@@ -1,7 +1,6 @@
 package com.squadmind.squad.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.squadmind.squad.enums.UsuarioTipo;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -62,9 +61,9 @@ public class Usuario implements Serializable {
 
     @ManyToMany
     @JoinTable(
-            name = "usuario_tipo",  // nome da tabela de junção
-            joinColumns = @JoinColumn(name = "usuario_id"), // FK para Usuario
-            inverseJoinColumns = @JoinColumn(name = "tipo_id") // FK para Tipo
+            name = "usuario_tipo",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "tipo_id")
     )
     @JsonIgnore
     private List<Tipo> tipos = new ArrayList<>();

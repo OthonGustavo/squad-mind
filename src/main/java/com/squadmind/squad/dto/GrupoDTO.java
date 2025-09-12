@@ -19,12 +19,19 @@ public class GrupoDTO {
     private Integer numeroGrupo;
     private String criterioFormacao;
     private Instant criadoEm;
+    private ProjetoDTO projeto;
 
     public GrupoDTO(Grupo grupo) {
-        this.id = grupo.getId();
-        this.nomeGrupo = grupo.getNomeGrupo();
-        this.numeroGrupo = grupo.getNumeroGrupo();
-        this.criterioFormacao = grupo.getCriterioFormacao();
-        this.criadoEm = grupo.getCriadoEm();
+        if (grupo != null) {
+            this.id = grupo.getId();
+            this.nomeGrupo = grupo.getNomeGrupo();
+            this.numeroGrupo = grupo.getNumeroGrupo();
+            this.criterioFormacao = grupo.getCriterioFormacao();
+            this.criadoEm = grupo.getCriadoEm();
+
+            if (grupo.getProjeto() != null) {
+                this.projeto = new ProjetoDTO(grupo.getProjeto());
+            }
+        }
     }
 }

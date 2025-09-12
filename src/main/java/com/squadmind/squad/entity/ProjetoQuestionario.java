@@ -25,10 +25,10 @@ public class ProjetoQuestionario implements Serializable {
     private Long id;
 
     @ManyToMany
-    private List<Projeto> projeto_id = new ArrayList<>();
+    private List<Projeto> projeto = new ArrayList<>();
 
     @ManyToMany
-    private List<Questionario> questionario_id = new ArrayList<>();
+    private List<Questionario> questionario = new ArrayList<>();
 
     public ProjetoQuestionario(Long id) {
         this.id = id;

@@ -23,7 +23,7 @@ public class Tipo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String nome_tipo;
 

@@ -12,7 +12,7 @@ import lombok.*;
 public class GrupoMembros {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "grupo_id")

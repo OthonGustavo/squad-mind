@@ -18,7 +18,7 @@ public class PerfilResultado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "perfil_dominante")
     private String perfilDominante;
@@ -53,7 +53,7 @@ public class PerfilResultado {
     @Column(name = "data_validade")
     private Instant dataValidade;
 
-    public PerfilResultado(int id, String perfilDominante, String perfilTecnico, Instant dataCalculo, Instant dataValidade) {
+    public PerfilResultado(Long id, String perfilDominante, String perfilTecnico, Instant dataCalculo, Instant dataValidade) {
         this.id = id;
         this.perfilDominante = perfilDominante;
         this.perfilTecnico = perfilTecnico;

@@ -2,15 +2,13 @@ package com.squadmind.squad.dto;
 
 import com.squadmind.squad.entity.Tipo;
 import com.squadmind.squad.entity.Usuario;
-import com.squadmind.squad.enums.UsuarioTipo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -18,25 +16,29 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UsuarioDTO {
+
     private int id;
     private String nome;
     private String email;
-    private List<Tipo> tipo;
     private String registro;
-    private String criadoEm;
-    private String atualizado_em;
-    private List<TipoDTO> tipos;
+    private Instant criadoEm;
+    private Instant alteradoEm;
+    private List<TipoDTO> tipos = new ArrayList<>();
 
     public UsuarioDTO(Usuario usuario) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
-                .withZone(ZoneId.systemDefault());
+        if (usuario != null) {
+            this.id = usuario.getId();
+            this.nome = usuario.getNome();
+            this.email = usuario.getEmail();
+            this.registro = usuario.getRegistro();
+            this.criadoEm = usuario.getCriadoEm();
+            this.alteradoEm = usuario.getAlteradoEm();
 
-        this.id = usuario.getId();
-        this.nome = usuario.getNome();
-        this.email = usuario.getEmail();
-        this.tipo = usuario.getTipos();
-        this.registro = usuario.getRegistro();
-        this.criadoEm = formatter.format(usuario.getCriadoEm());
-        this.atualizado_em = formatter.format(usuario.getAlteradoEm());
+            if (usuario.getTipos() != null) {
+                for (Tipo tipo : usuario.getTipos()) {
+                    this.tipos.add(new TipoDTO(tipo));
+                }
+            }
+        }
     }
 }
