@@ -1,8 +1,8 @@
 package com.squadmind.squad.controller;
 
+import com.squadmind.squad.dto.PerfilResultadoDTO;
 import com.squadmind.squad.dto.QuestionarioDTO;
-import com.squadmind.squad.entity.PerfilResultado;
-import com.squadmind.squad.entity.Questionario;
+import com.squadmind.squad.mapper.PerfilResultadoMapper;
 import com.squadmind.squad.service.QuestionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,28 +19,28 @@ public class QuestionarioController {
     private QuestionarioService questionarioService;
 
     @PostMapping("/projeto/{projetoId}")
-    public ResponseEntity<QuestionarioDTO> criarQuestionario(@PathVariable Long projetoId, @RequestBody Questionario questionario) {
-        Questionario novoQuestionario = questionarioService.criarQuestionario(projetoId, questionario);
-        return ResponseEntity.ok(new QuestionarioDTO(novoQuestionario));
+    public ResponseEntity<QuestionarioDTO> criarQuestionario(@PathVariable Long projetoId,
+                                                             @RequestBody QuestionarioDTO dto) {
+        QuestionarioDTO novoQuestionario = questionarioService.criarQuestionario(projetoId, dto);
+        return ResponseEntity.ok(novoQuestionario);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<QuestionarioDTO> buscarPorId(@PathVariable Long id) {
-        Questionario questionario = questionarioService.buscarPorId(id);
-        return ResponseEntity.ok(new QuestionarioDTO(questionario));
+        QuestionarioDTO questionario = questionarioService.buscarPorId(id);
+        return ResponseEntity.ok(questionario);
     }
 
     @GetMapping
     public ResponseEntity<List<QuestionarioDTO>> listarTodos() {
-        List<Questionario> questionarios = questionarioService.listarTodos();
-        List<QuestionarioDTO> questionariosDTO = questionarios.stream().map(QuestionarioDTO::new).collect(Collectors.toList());
+        List<QuestionarioDTO> questionariosDTO = questionarioService.listarTodos();
         return ResponseEntity.ok(questionariosDTO);
     }
 
     @GetMapping("/{id}/resultados")
-    public ResponseEntity<List<PerfilResultado>> listarResultadosQuestionario(@PathVariable Long id) {
-        List<PerfilResultado> resultados = questionarioService.listarResultadosQuestionario(id);
-        return ResponseEntity.ok(resultados);
+    public ResponseEntity<List<PerfilResultadoDTO>> listarResultadosQuestionario(@PathVariable Long id) {
+        List<PerfilResultadoDTO> resultadosDTO = questionarioService.listarResultadosQuestionario(id);
+        return ResponseEntity.ok(resultadosDTO);
     }
 
     @DeleteMapping("/{id}")

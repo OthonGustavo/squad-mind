@@ -8,4 +8,13 @@ public class TagMapper {
         if (tag == null) return null;
         return new TagDTO(tag);
     }
+
+    public static Tag toEntity(TagDTO tagDTO){
+        if (tagDTO == null) return null;
+        Tag tag = new Tag();
+        tag.setId(tagDTO.getId());
+        tag.setNomeTag(tagDTO.getNomeTag());
+        tag.setSigla(tagDTO.getSigla());
+        return tag;
+    }
 }

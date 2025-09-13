@@ -24,7 +24,7 @@ public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String nome;
     private String email;
@@ -65,7 +65,7 @@ public class Usuario implements Serializable {
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "tipo_id")
     )
-    @JsonIgnore
+    @ToString.Exclude
     private List<Tipo> tipos = new ArrayList<>();
 
 }

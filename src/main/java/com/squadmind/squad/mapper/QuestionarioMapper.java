@@ -9,4 +9,13 @@ public class QuestionarioMapper {
         if (questionario == null) return null;
         return new QuestionarioDTO(questionario);
     }
+
+    public static Questionario toEntity(QuestionarioDTO dto){
+        if (dto == null) return null;
+        Questionario questionario = new Questionario();
+        questionario.setId(dto.getId());
+        questionario.setNome(dto.getNome());
+        questionario.setTipo(dto.getTipo());
+        return questionario;
+    }
 }

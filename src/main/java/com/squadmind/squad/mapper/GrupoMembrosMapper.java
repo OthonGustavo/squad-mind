@@ -9,4 +9,10 @@ public class GrupoMembrosMapper {
         if (membro == null) return null;
         return new GrupoMembrosDTO(membro);
     }
+    public static GrupoMembros toEntity(GrupoMembrosDTO dto){
+        if (dto == null) return null;
+        GrupoMembros grupoMembros = new GrupoMembros();
+        grupoMembros.setId(dto.getId());
+        return grupoMembros;
+    }
 }

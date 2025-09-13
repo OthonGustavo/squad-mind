@@ -8,4 +8,12 @@ public class PerfilResultadoMapper {
         if (perfilResultado == null) return null;
         return new PerfilResultadoDTO(perfilResultado);
     }
+    public static PerfilResultado toEntity(PerfilResultadoDTO dto){
+        if (dto == null) return null;
+        PerfilResultado perfilResultado = new PerfilResultado();
+        perfilResultado.setId(dto.getId());
+        perfilResultado.setPerfilDominante(dto.getPerfilDominante());
+        perfilResultado.setPerfilTecnico(dto.getPerfilTecnico());
+        return perfilResultado;
+    }
 }

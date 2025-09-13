@@ -1,6 +1,6 @@
 package com.squadmind.squad.controller;
 
-import com.squadmind.squad.entity.Resposta;
+import com.squadmind.squad.dto.RespostaDTO;
 import com.squadmind.squad.service.RespostaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,31 +16,50 @@ public class RespostaController {
     private RespostaService respostaService;
 
     @PostMapping("/usuario/{usuarioId}/projeto/{projetoId}/pergunta/{perguntaId}")
-    public ResponseEntity<Resposta> salvarResposta(
+    public ResponseEntity<RespostaDTO> salvarResposta(
             @PathVariable Long usuarioId,
             @PathVariable Long projetoId,
             @PathVariable Long perguntaId,
             @RequestParam(required = false) Long alternativaId,
-            @RequestBody Resposta resposta) {
-        Resposta novaResposta = respostaService.salvarResposta(usuarioId, projetoId, perguntaId, alternativaId, resposta);
+            @RequestBody RespostaDTO dto) {
+
+        RespostaDTO novaResposta = respostaService.salvarResposta(usuarioId, projetoId, perguntaId, alternativaId, dto);
         return ResponseEntity.ok(novaResposta);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Resposta> buscarPorId(@PathVariable Long id) {
-        Resposta resposta = respostaService.buscarPorId(id);
+    public ResponseEntity<RespostaDTO> buscarPorId(@PathVariable Long id) {
+        RespostaDTO resposta = respostaService.buscarPorId(id);
         return ResponseEntity.ok(resposta);
     }
 
     @GetMapping("/usuario/{usuarioId}")
-    public ResponseEntity<List<Resposta>> listarPorUsuario(@PathVariable Long usuarioId) {
-        List<Resposta> respostas = respostaService.listarPorUsuario(usuarioId);
+    public ResponseEntity<List<RespostaDTO>> listarPorUsuario(@PathVariable Long usuarioId) {
+        List<RespostaDTO> respostas = respostaService.listarPorUsuario(usuarioId);
+        return ResponseEntity.ok(respostas);
+    }
+
+    @GetMapping("/projeto/{projetoId}")
+    public ResponseEntity<List<RespostaDTO>> listarPorProjeto(@PathVariable Long projetoId) {
+        List<RespostaDTO> respostas = respostaService.listarPorProjeto(projetoId);
+        return ResponseEntity.ok(respostas);
+    }
+
+    @GetMapping("/pergunta/{perguntaId}")
+    public ResponseEntity<List<RespostaDTO>> listarPorPergunta(@PathVariable Long perguntaId) {
+        List<RespostaDTO> respostas = respostaService.listarPorPergunta(perguntaId);
+        return ResponseEntity.ok(respostas);
+    }
+
+    @GetMapping("/alternativa/{alternativaId}")
+    public ResponseEntity<List<RespostaDTO>> listarPorAlternativa(@PathVariable Long alternativaId) {
+        List<RespostaDTO> respostas = respostaService.listarPorAlternativa(alternativaId);
         return ResponseEntity.ok(respostas);
     }
 
     @GetMapping
-    public ResponseEntity<List<Resposta>> listarTodas() {
-        List<Resposta> respostas = respostaService.listarTodas();
+    public ResponseEntity<List<RespostaDTO>> listarTodas() {
+        List<RespostaDTO> respostas = respostaService.listarTodas();
         return ResponseEntity.ok(respostas);
     }
 

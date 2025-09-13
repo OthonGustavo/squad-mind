@@ -11,4 +11,14 @@ public class ProjetoMapper {
         if (projeto == null) return null;
         return new ProjetoDTO(projeto);
     }
+
+    public static Projeto toEntity(ProjetoDTO dto){
+        if (dto == null) return null;
+        Projeto projeto = new Projeto();
+        projeto.setId(dto.getId());
+        projeto.setNome(dto.getNome());
+        projeto.setQtd_grupos(dto.getQtdGrupos());
+        return projeto;
+    }
+
 }

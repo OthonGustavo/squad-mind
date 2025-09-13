@@ -10,4 +10,12 @@ public class TipoMapper {
         return new TipoDTO(tipo);
     }
 
+    public static Tipo toEntity(TipoDTO tipoDTO){
+        if (tipoDTO == null) return null;
+        Tipo tipo = new Tipo();
+        tipo.setId(tipoDTO.getId());
+        tipo.setNome_tipo(tipo.getNome_tipo());
+        return tipo;
+    }
+
 }

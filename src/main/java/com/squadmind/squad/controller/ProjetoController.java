@@ -1,14 +1,12 @@
 package com.squadmind.squad.controller;
 
-import com.squadmind.squad.dto.ProjetoDTO;
-import com.squadmind.squad.entity.*;
+import com.squadmind.squad.dto.*;
 import com.squadmind.squad.service.ProjetoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/projetos")
@@ -17,49 +15,56 @@ public class ProjetoController {
     @Autowired
     private ProjetoService projetoService;
 
+    // --- Criar projeto ---
     @PostMapping
-    public ResponseEntity<ProjetoDTO> criarProjeto(@RequestBody Projeto projeto) {
-        Projeto novoProjeto = projetoService.criarProjeto(projeto);
-        return ResponseEntity.ok(new ProjetoDTO(novoProjeto));
+    public ResponseEntity<ProjetoDTO> criarProjeto(@RequestBody ProjetoDTO dto) {
+        ProjetoDTO novoProjeto = projetoService.criarProjeto(dto);
+        return ResponseEntity.ok(novoProjeto);
     }
 
+    // --- Buscar projeto por ID ---
     @GetMapping("/{id}")
     public ResponseEntity<ProjetoDTO> buscarPorId(@PathVariable Long id) {
-        Projeto projeto = projetoService.buscarPorId(id);
-        return ResponseEntity.ok(new ProjetoDTO(projeto));
+        ProjetoDTO projeto = projetoService.buscarPorId(id);
+        return ResponseEntity.ok(projeto);
     }
 
+    // --- Listar todos os projetos ---
     @GetMapping
     public ResponseEntity<List<ProjetoDTO>> listarProjetos() {
-        List<Projeto> projetos = projetoService.listarProjetos();
-        List<ProjetoDTO> projetosDTO = projetos.stream().map(ProjetoDTO::new).collect(Collectors.toList());
+        List<ProjetoDTO> projetosDTO = projetoService.listarProjetos();
         return ResponseEntity.ok(projetosDTO);
     }
 
+    // --- Listar participantes do projeto ---
     @GetMapping("/{id}/participantes")
-    public ResponseEntity<List<Participante>> listarParticipantes(@PathVariable Long id) {
-        List<Participante> participantes = projetoService.listarParticipantes(id);
+    public ResponseEntity<List<ParticipanteDTO>> listarParticipantes(@PathVariable Long id) {
+        List<ParticipanteDTO> participantes = projetoService.listarParticipantes(id);
         return ResponseEntity.ok(participantes);
     }
 
+    // --- Listar grupos do projeto ---
     @GetMapping("/{id}/grupos")
-    public ResponseEntity<List<Grupo>> listarGruposDoProjeto(@PathVariable Long id) {
-        List<Grupo> grupos = projetoService.listarGruposDoProjeto(id);
+    public ResponseEntity<List<GrupoDTO>> listarGruposDoProjeto(@PathVariable Long id) {
+        List<GrupoDTO> grupos = projetoService.listarGruposDoProjeto(id);
         return ResponseEntity.ok(grupos);
     }
 
+    // --- Listar questionários do projeto ---
     @GetMapping("/{id}/questionarios")
-    public ResponseEntity<List<Questionario>> listarQuestionariosDoProjeto(@PathVariable Long id) {
-        List<Questionario> questionarios = projetoService.listarQuestionariosDoProjeto(id);
+    public ResponseEntity<List<QuestionarioDTO>> listarQuestionariosDoProjeto(@PathVariable Long id) {
+        List<QuestionarioDTO> questionarios = projetoService.listarQuestionariosDoProjeto(id);
         return ResponseEntity.ok(questionarios);
     }
 
+    // --- Listar resultados do projeto ---
     @GetMapping("/{id}/resultados")
-    public ResponseEntity<List<PerfilResultado>> listarResultadosProjeto(@PathVariable Long id) {
-        List<PerfilResultado> resultados = projetoService.listarResultadosProjeto(id);
+    public ResponseEntity<List<PerfilResultadoDTO>> listarResultadosProjeto(@PathVariable Long id) {
+        List<PerfilResultadoDTO> resultados = projetoService.listarResultadosProjeto(id);
         return ResponseEntity.ok(resultados);
     }
 
+    // --- Remover projeto ---
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> removerProjeto(@PathVariable Long id) {
         projetoService.removerProjeto(id);

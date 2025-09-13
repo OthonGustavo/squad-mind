@@ -10,4 +10,13 @@ public class UsuarioMapper {
         if (usuario == null) return null;
         return new UsuarioDTO(usuario);
     }
+
+    public static Usuario toEntity(UsuarioDTO usuarioDTO){
+        if (usuarioDTO == null) return null;
+        Usuario usuario = new Usuario();
+        usuario.setId(usuario.getId());
+        usuario.setNome(usuarioDTO.getNome());
+        usuario.setEmail(usuarioDTO.getEmail());
+        return usuario;
+    }
 }

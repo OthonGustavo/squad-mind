@@ -8,4 +8,11 @@ public class ParticipanteMapper {
         if (participante == null) return null;
         return new ParticipanteDTO(participante);
     }
+    public static Participante toEntity(ParticipanteDTO dto){
+        if (dto == null) return null;
+        Participante participante = new Participante();
+        participante.setId(dto.getId());
+        participante.setDataEntrada(dto.getDataEntrada());
+        return participante;
+    }
 }

@@ -8,4 +8,12 @@ public class AlternativaMapper {
         if (alternativa == null) return null;
         return new AlternativaDTO(alternativa);
     }
+    public static Alternativa toEntity(AlternativaDTO dto){
+        if (dto == null) return null;
+        Alternativa alternativa = new Alternativa();
+        alternativa.setId(dto.getId());
+        alternativa.setTexto(dto.getTexto());
+        alternativa.setValor(dto.getValor());
+        return alternativa;
+    }
 }
